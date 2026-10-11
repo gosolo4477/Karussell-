@@ -31,6 +31,20 @@
   }
   $(".ptext").textContent = TEXT.code;
 
+  // Wellenförmige Pfeile: die Welle (Periode 16) fließt später im Takt nach rechts
+  const WAVE_D = (() => {
+    let d = "M-48 18 q4 -14 8 0";
+    for (let x = -40; x < 44; x += 8) d += " t8 0";
+    return d;
+  })();
+  $$(".wa").forEach((el) => {
+    el.innerHTML =
+      '<svg class="wave-arrow" viewBox="0 0 64 36" aria-hidden="true">' +
+      '<defs><clipPath id="wa-clip"><rect x="0" y="0" width="47" height="36" /></clipPath></defs>' +
+      '<g clip-path="url(#wa-clip)"><path class="wave" d="' + WAVE_D + '" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="round" /></g>' +
+      '<path d="M43 7 L62 18 L43 29 Z" fill="currentColor" /></svg>';
+  });
+
   // Folien und ihre Länge in Beats (weggelassene fallen raus)
   const SLIDES = [
     { id: "s1", beats: 8 },
@@ -93,6 +107,14 @@
     }
   };
 
+  // Welle fließt pro Beat genau eine Periode weiter -> nahtlos und im Takt
+  const waveFlow = (wa, fromBeat, toBeat) => {
+    const path = $(".wave", wa);
+    for (let b = fromBeat; b < toBeat; b++) {
+      seq.push([path, { x: [0, 16] }, { at: t(b), duration: BEAT, ease: "linear" }]);
+    }
+  };
+
   const bounce = (el, fromBeat, toBeat) => {
     for (let b = fromBeat; b < toBeat; b++) {
       seq.push([el, { y: [0, 40, 0] }, { at: t(b), duration: 0.3, ease: "easeOut" }]);
@@ -144,7 +166,7 @@
     wiggle(emoji, s.start + 2, s.start + s.beats, 14);
   }
 
-  // 3: Alle Inhaltsstoffe -> Punkte im Bild + drei Gruppen-Kästen im Takt
+  // 3: Alle Inhaltsstoffe -> Video-Karte + drei Kästen mit fließenden Wellenpfeilen
   {
     const s = byId.s3;
     const slide = $("#s3");
@@ -153,36 +175,16 @@
     const card = $(".card", slide);
     cardIn(card, t(s.start + 0.5), 1.5);
 
-    const spots = $$(".spot b", slide);
-    const ripples = $$(".spot .ripple", slide);
-    const ripple = (el, at) =>
-      seq.push([el, { opacity: [0, 0.9, 0], scale: [1, 1, 2.4] }, { at, duration: 0.45, times: [0, 0.05, 1], ease: "easeOut" }]);
-
-    const showSpot = (k, b) => {
-      seq.push([spots[k], { opacity: [0, 1], scale: [0, 1.3, 1] }, { at: t(b), duration: 0.35, ease: "easeOut" }]);
-      ripple(ripples[k], t(b));
-      for (let beat = Math.floor(b) + 1; beat < end; beat++) {
-        seq.push([spots[k], { scale: [1, 1.25, 1] }, { at: t(beat), duration: 0.22, ease: "easeOut" }]);
-        ripple(ripples[k], t(beat));
-      }
-    };
-
-    // Gruppe: Punkte auf halben Beats, dann der Kasten auf dem nächsten Beat
-    const groups = $$(".group", slide);
-    const plan = [
-      { spots: [0, 1, 2, 3], at: s.start + 1.5 },
-      { spots: [4, 5], at: s.start + 5 },
-      { spots: [6], at: s.start + 7.5 },
-    ];
-    plan.forEach((g, gi) => {
-      g.spots.forEach((k, j) => showSpot(k, g.at + j * 0.5));
-      const boxAt = g.at + g.spots.length * 0.5;
-      const box = groups[gi];
-      seq.push([box, { opacity: [0, 1], x: [-200, 0], scale: [0.85, 1] }, { at: t(boxAt), duration: 0.4, ease: POP }]);
-      const arrow = $(".p-arrow", box);
-      for (let beat = Math.ceil(boxAt) + 1; beat < end; beat++) {
-        seq.push([arrow, { x: [0, 14, 0] }, { at: t(beat), duration: 0.25, ease: "easeOut" }]);
-      }
+    $$(".group", slide).forEach((box, gi) => {
+      const at = s.start + 2 + gi * 2;
+      seq.push([box, { opacity: [0, 1], x: [-200, 0], scale: [0.85, 1] }, { at: t(at), duration: 0.4, ease: POP }]);
+      $$(".wa", box).forEach((wa, k) => {
+        seq.push([wa, { opacity: [0, 1], scale: [0, 1.3, 1], x: [-30, 0] }, { at: t(at + 0.25 + k * 0.5), duration: 0.35, ease: "easeOut" }]);
+        waveFlow(wa, Math.ceil(at + 0.5), end);
+        for (let b = Math.ceil(at + 1); b < end; b++) {
+          seq.push([wa, { x: [0, 10, 0] }, { at: t(b), duration: 0.25, ease: "easeOut" }]);
+        }
+      });
     });
 
     bumps(card, s.start + 9, end, 1.03);
@@ -242,16 +244,10 @@
     const end = s.start + s.beats;
     popIn($(".gift", slide), t(s.start), { y: 60, scale: 0.4 });
     $$("h1.hl > span", slide).forEach((el, k) => popIn(el, t(s.start + 0.5 + k * 0.5)));
-
-    // Gisèle und das Titelblatt fliegen schräg rein und wippen abwechselnd im Takt
-    const photos = $$(".photo", slide);
-    seq.push([photos[0], { opacity: [0, 1], scale: [0.3, 1], rotate: [-20, -4] }, { at: t(s.start + 1.5), duration: 0.5, ease: POP }]);
-    seq.push([photos[1], { opacity: [0, 1], scale: [0.3, 1], rotate: [20, 5] }, { at: t(s.start + 2), duration: 0.5, ease: POP }]);
-    for (let b = s.start + 4; b < end; b++) {
-      seq.push([photos[b % 2], { scale: [1, 1.05, 1] }, { at: t(b), duration: 0.22, ease: "easeOut" }]);
-    }
-
-    popIn($("#s6-sub > span"), t(s.start + 2.5), { y: 60, scale: 0.8 });
+    popIn($("#s6-sub > span"), t(s.start + 2), { y: 60, scale: 0.8 });
+    const cta = $("#s6-cta > span");
+    popIn(cta, t(s.start + 2.5), { y: 80, scale: 0.4 });
+    bumps(cta, s.start + 4, end, 1.06);
     bounce($("#s6-finger"), s.start + 3, end);
 
     const field = $(".cfield", slide);
@@ -309,24 +305,30 @@
   const controls = animate(seq, { repeat: render ? 0 : Infinity });
   if (render) controls.pause();
 
-  // Pizza-Video auf Folie 1 als Einzelbild-Folge (Zeitlupe, 30 fps), startet mit der Karte
-  const video = $("#s1-video");
-  const VIDEO_START = t(SLIDES[0].start + 2);
-  const FRAME_COUNT = window.PIZZA_FRAMES || 1;
-  const frameSrc = (i) => `assets/pizza-frames/f_${String(i + 1).padStart(4, "0")}.jpg`;
-  const frames = Array.from({ length: FRAME_COUNT }, (_, i) => {
-    const img = new Image();
-    img.src = frameSrc(i);
-    return img;
-  });
-  let shownFrame = 0;
-  const showFrame = (time) => {
-    const i = Math.min(FRAME_COUNT - 1, Math.max(0, Math.floor((time - VIDEO_START) * 30)));
-    if (i === shownFrame) return Promise.resolve();
-    shownFrame = i;
-    video.src = frames[i].src;
-    return video.decode().catch(() => {});
-  };
+  // Videos als Einzelbild-Folgen (30 fps), gesteuert von der Timeline -> beim Rendern exakt
+  const COUNTS = window.REEL_FRAMES || {};
+  const players = [
+    { el: $("#s1-video"), dir: "pizza-frames", count: COUNTS.pizza || 1, start: t(byId.s1.start + 2) },
+    { el: $("#s3-video"), dir: "zutaten-frames", count: COUNTS.zutaten || 1, start: t(byId.s3.start + 0.5) },
+  ].map((pl) => ({
+    ...pl,
+    shown: 0,
+    frames: Array.from({ length: pl.count }, (_, i) => {
+      const img = new Image();
+      img.src = `assets/${pl.dir}/f_${String(i + 1).padStart(4, "0")}.jpg`;
+      return img;
+    }),
+  }));
+  const showFrame = (time) =>
+    Promise.all(
+      players.map((pl) => {
+        const i = Math.min(pl.count - 1, Math.max(0, Math.floor((time - pl.start) * 30)));
+        if (i === pl.shown) return null;
+        pl.shown = i;
+        pl.el.src = pl.frames[i].src;
+        return pl.el.decode().catch(() => {});
+      })
+    );
 
   if (!render) {
     const tick = () => {
@@ -341,7 +343,7 @@
     lang: LANG,
     duration,
     slideStarts: SLIDES.slice(1).map((sl) => t(sl.start)),
-    ready: () => Promise.all(frames.map((img) => img.decode().catch(() => {}))),
+    ready: () => Promise.all(players.flatMap((pl) => pl.frames).map((img) => img.decode().catch(() => {}))),
     seek(time) {
       controls.time = time;
       return showFrame(time);
