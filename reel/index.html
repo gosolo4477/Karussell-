@@ -269,6 +269,47 @@
     .blue .badge { background: var(--orange); }
     .orange .cta-box { background: var(--blue); }
 
+    .groups {
+      position: absolute;
+      left: 50px;
+      right: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .group {
+      padding: 26px 34px 30px;
+      border-radius: 34px;
+      background: var(--white);
+      color: var(--navy);
+      box-shadow: 0 14px 0 var(--navy);
+    }
+
+    .g-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 50px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .g-head .num { margin-right: 0; }
+    .g-head .num:last-of-type { margin-right: 10px; }
+
+    .g-names {
+      margin-top: 6px;
+      font-size: 33px;
+      font-weight: 700;
+      opacity: 0.75;
+    }
+
+    .group .p-row { margin-top: 12px; font-size: 41px; gap: 16px; }
+    .group .p-arrow { width: 54px; height: 36px; }
+    .spot b, .spot .ripple { left: -27px; top: -27px; width: 54px; height: 54px; }
+    .spot b { font-size: 28px; border-width: 5px; }
+
     #dots {
       position: absolute;
       left: 0;
@@ -317,92 +358,43 @@
         <div class="emoji" id="s2-emoji" style="top: 1000px; font-size: 300px">😬</div>
       </section>
 
-      <!-- 3a: Fasern -> Gel -->
+      <!-- 3: Alle Inhaltsstoffe auf einer Folie -->
       <section class="slide orange" id="s3" style="left: 2160px">
         <div class="blob" style="left: -500px; top: -420px"></div>
         <div class="ring" style="right: -200px; top: 1250px"></div>
-        <h1 class="hl" style="top: 170px; font-size: 112px">
-          <span>Fibras</span>
-          <span><span class="mark">naturales</span></span>
+        <h1 class="hl" style="top: 150px; font-size: 104px">
+          <span>¿Qué <span class="mark">lleva?</span></span>
         </h1>
-        <div class="card" style="top: 450px; width: 840px; height: 440px; margin-left: -420px">
+        <div class="card" style="top: 330px; width: 840px; height: 400px; margin-left: -420px">
           <img src="assets/wirkstoffe.jpg" alt="" />
-          <!-- Punkte auf den Zutaten (Position im 812x412-Innenbereich) -->
-          <div class="spot" style="left: 248px; top: 145px"><i class="ripple"></i><b>1</b></div>
-          <div class="spot" style="left: 608px; top: 50px"><i class="ripple"></i><b>2</b></div>
-          <div class="spot" style="left: 301px; top: 345px"><i class="ripple"></i><b>3</b></div>
-          <div class="spot" style="left: 519px; top: 286px"><i class="ripple"></i><b>4</b></div>
+          <!-- Punkte auf den Zutaten (Position im 812x372-Innenbereich) -->
+          <div class="spot" style="left: 248px; top: 125px"><i class="ripple"></i><b>1</b></div>
+          <div class="spot" style="left: 590px; top: 71px"><i class="ripple"></i><b>2</b></div>
+          <div class="spot" style="left: 301px; top: 318px"><i class="ripple"></i><b>3</b></div>
+          <div class="spot" style="left: 513px; top: 278px"><i class="ripple"></i><b>4</b></div>
+          <div class="spot" style="left: 590px; top: 168px"><i class="ripple"></i><b>5</b></div>
+          <div class="spot" style="left: 226px; top: 50px"><i class="ripple"></i><b>6</b></div>
+          <div class="spot" style="left: 690px; top: 225px"><i class="ripple"></i><b>7</b></div>
         </div>
-        <svg class="arrow" style="top: 905px" viewBox="0 0 90 110" aria-hidden="true">
-          <path d="M45 6 L84 52 H60 V104 H30 V52 H6 Z" fill="#fff" />
-        </svg>
-        <div class="chips small" style="top: 1000px">
-          <span class="chip"><b class="num">1</b>Yacón</span>
-          <span class="chip"><b class="num">2</b>Fibra de acacia</span>
-          <span class="chip"><b class="num">3</b>Inulina de achicoria</span>
-          <span class="chip"><b class="num">4</b>Pectina de manzana</span>
-        </div>
-        <div class="panel" style="top: 1000px">
-          <p class="p-head">Forman un gel suave y natural</p>
-          <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Carbs y grasas se absorben más lento</p>
-          <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Más saciedad, por más tiempo</p>
-        </div>
-      </section>
-
-      <!-- 3b: Zimt + Chrom -->
-      <section class="slide blue" id="s3b" style="left: 3240px">
-        <div class="blob" style="right: -480px; top: -380px"></div>
-        <div class="ring" style="left: -190px; top: 1240px"></div>
-        <h1 class="hl" style="top: 170px; font-size: 112px">
-          <span>Canela</span>
-          <span><span class="mark">+ cromo</span></span>
-        </h1>
-        <div class="card" style="top: 450px; width: 840px; height: 440px; margin-left: -420px">
-          <img src="assets/wirkstoffe.jpg" alt="" />
-          <div class="spot" style="left: 549px; top: 180px"><i class="ripple"></i><b>1</b></div>
-          <div class="spot" style="left: 209px; top: 68px"><i class="ripple"></i><b>2</b></div>
-        </div>
-        <svg class="arrow" style="top: 905px" viewBox="0 0 90 110" aria-hidden="true">
-          <path d="M45 6 L84 52 H60 V104 H30 V52 H6 Z" fill="#fff" />
-        </svg>
-        <div class="chips small" style="top: 1000px">
-          <span class="chip"><b class="num">1</b>Extracto de canela</span>
-          <span class="chip"><b class="num">2</b>Cromo orgánico</span>
-        </div>
-        <div class="panel" style="top: 1000px">
-          <p class="p-head">Azúcar más estable después de comer</p>
-          <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Sin picos bruscos</p>
-          <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Menos antojos</p>
-        </div>
-      </section>
-
-      <!-- 3c: Grüner Tee -->
-      <section class="slide orange" id="s3c" style="left: 4320px">
-        <div class="blob" style="left: -520px; top: 1000px"></div>
-        <div class="ring" style="right: -190px; top: 150px"></div>
-        <h1 class="hl" style="top: 170px; font-size: 112px">
-          <span>Té verde</span>
-          <span><span class="mark">EGCG</span></span>
-        </h1>
-        <div class="card" style="top: 450px; width: 840px; height: 440px; margin-left: -420px">
-          <img src="assets/wirkstoffe.jpg" alt="" />
-          <div class="spot" style="left: 300px; top: 95px"><i class="ripple"></i><b>1</b></div>
-        </div>
-        <svg class="arrow" style="top: 905px" viewBox="0 0 90 110" aria-hidden="true">
-          <path d="M45 6 L84 52 H60 V104 H30 V52 H6 Z" fill="#fff" />
-        </svg>
-        <div class="chips small" style="top: 1000px">
-          <span class="chip"><b class="num">1</b>Extracto de té verde</span>
-        </div>
-        <div class="panel" style="top: 1000px">
-          <p class="p-head">Activa tu metabolismo de forma suave</p>
-          <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Apoya la termogénesis natural</p>
-          <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Más energía para tu día</p>
+        <div class="groups" style="top: 790px">
+          <div class="group">
+            <p class="g-head"><b class="num">1</b><b class="num">2</b><b class="num">3</b><b class="num">4</b>Fibras naturales</p>
+            <p class="g-names">Yacón · Acacia · Inulina de achicoria · Pectina de manzana</p>
+            <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Forman un gel: absorción más lenta y más saciedad</p>
+          </div>
+          <div class="group">
+            <p class="g-head"><b class="num">5</b><b class="num">6</b>Canela + cromo orgánico</p>
+            <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Azúcar más estable, menos antojos</p>
+          </div>
+          <div class="group">
+            <p class="g-head"><b class="num">7</b>Té verde (EGCG)</p>
+            <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Activa tu metabolismo de forma suave</p>
+          </div>
         </div>
       </section>
 
       <!-- 4: Ohne -->
-      <section class="slide blue" id="s4" style="left: 5400px">
+      <section class="slide blue" id="s4" style="left: 3240px">
         <div class="blob" style="left: -400px; top: 1000px"></div>
         <div class="ring" style="right: -150px; top: 160px"></div>
         <h1 class="hl" style="top: 600px; font-size: 92px; line-height: 1.9; text-align: left; left: 70px; right: 40px">
@@ -412,7 +404,7 @@
       </section>
 
       <!-- 5: Ritual -->
-      <section class="slide orange" id="s5" style="left: 6480px">
+      <section class="slide orange" id="s5" style="left: 4320px">
         <div class="blob" style="right: -520px; top: 980px"></div>
         <div class="ring" style="left: -170px; top: 140px"></div>
         <h1 class="hl" style="top: 180px; font-size: 118px">
@@ -428,7 +420,7 @@
       </section>
 
       <!-- 6: CTA -->
-      <section class="slide blue" id="s6" style="left: 7560px">
+      <section class="slide blue" id="s6" style="left: 5400px">
         <div class="blob" style="left: -420px; top: -380px"></div>
         <div class="ring" style="right: -180px; top: 1220px"></div>
         <h1 class="hl" style="top: 260px; font-size: 120px">

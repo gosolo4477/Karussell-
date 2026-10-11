@@ -13,9 +13,7 @@
   const SLIDES = [
     { id: "s1", beats: 8 },
     { id: "s2", beats: 4 },
-    { id: "s3", beats: 14 },
-    { id: "s3b", beats: 12 },
-    { id: "s3c", beats: 10 },
+    { id: "s3", beats: 16 },
     { id: "s4", beats: 4 },
     { id: "s5", beats: 8 },
     { id: "s6", beats: 8 },
@@ -117,66 +115,53 @@
     wiggle(emoji, s.start + 2, s.start + s.beats, 14);
   }
 
-  // 3a + 3b: Wirkstoffe -> Punkte im Bild, Chips, dann Wirkungs-Panel
-  const ingredients = (s, panelAt) => {
-    const slide = $("#" + s.id);
+  // 3: Alle Inhaltsstoffe -> Punkte im Bild + drei Gruppen-Kästen im Takt
+  {
+    const s = SLIDES[2];
+    const slide = $("#s3");
     const end = s.start + s.beats;
-    $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
+    $$(".hl > span", slide).forEach((el) => popIn(el, t(s.start)));
     const card = $(".card", slide);
-    cardIn(card, t(s.start + 1), 2);
+    cardIn(card, t(s.start + 0.5), 1.5);
 
     const spots = $$(".spot b", slide);
     const ripples = $$(".spot .ripple", slide);
     const ripple = (el, at) =>
       seq.push([el, { opacity: [0, 0.9, 0], scale: [1, 1, 2.4] }, { at, duration: 0.45, times: [0, 0.05, 1], ease: "easeOut" }]);
 
-    // Chip und passender Punkt erscheinen gemeinsam, jeweils auf dem halben Beat
-    const chips = $$(".chip", slide);
-    chips.forEach((el, k) => {
-      const b = s.start + 2 + k * 0.5;
-      popIn(el, t(b), { y: 80, scale: 0.3 });
+    const showSpot = (k, b) => {
       seq.push([spots[k], { opacity: [0, 1], scale: [0, 1.3, 1] }, { at: t(b), duration: 0.35, ease: "easeOut" }]);
       ripple(ripples[k], t(b));
       for (let beat = Math.floor(b) + 1; beat < end; beat++) {
         seq.push([spots[k], { scale: [1, 1.25, 1] }, { at: t(beat), duration: 0.22, ease: "easeOut" }]);
         ripple(ripples[k], t(beat));
       }
-    });
+    };
 
-    // Pfeil hüpft im Takt Richtung Bild
-    const arrow = $(".arrow", slide);
-    seq.push([arrow, { opacity: [0, 1], scale: [0, 1] }, { at: t(s.start + 2), duration: 0.3, ease: POP }]);
-    for (let beat = s.start + 3; beat < end; beat++) {
-      seq.push([arrow, { y: [0, -26, 0] }, { at: t(beat), duration: 0.3, ease: "easeOut" }]);
-    }
-
-    // Chips machen Platz für das Wirkungs-Panel
-    const pb = s.start + panelAt;
-    chips.forEach((el, k) => {
-      seq.push([el, { opacity: [1, 0], scale: [1, 0.7] }, { at: t(pb) - 0.25 + k * 0.03, duration: 0.2, ease: "easeIn" }]);
-    });
-    const panel = $(".panel", slide);
-    seq.push([panel, { opacity: [0, 1], y: [160, 0], scale: [0.8, 1] }, { at: t(pb), duration: 0.45, ease: POP }]);
-    const rows = $$(".p-head, .p-row", slide);
-    rows.forEach((el, k) => {
-      seq.push([el, { opacity: [0, 1], x: [-120, 0] }, { at: t(pb + k), duration: 0.35, ease: POP }]);
-    });
-    // Pfeile in den Zeilen stoßen auf jedem Beat nach rechts
-    $$(".p-arrow", slide).forEach((el, k) => {
-      for (let beat = pb + k + 2; beat < end; beat++) {
-        seq.push([el, { x: [0, 16, 0] }, { at: t(beat), duration: 0.25, ease: "easeOut" }]);
+    // Gruppe: Punkte auf halben Beats, dann der Kasten auf dem nächsten Beat
+    const groups = $$(".group", slide);
+    const plan = [
+      { spots: [0, 1, 2, 3], at: s.start + 1.5 },
+      { spots: [4, 5], at: s.start + 5 },
+      { spots: [6], at: s.start + 7.5 },
+    ];
+    plan.forEach((g, gi) => {
+      g.spots.forEach((k, j) => showSpot(k, g.at + j * 0.5));
+      const boxAt = g.at + g.spots.length * 0.5;
+      const box = groups[gi];
+      seq.push([box, { opacity: [0, 1], x: [-200, 0], scale: [0.85, 1] }, { at: t(boxAt), duration: 0.4, ease: POP }]);
+      const arrow = $(".p-arrow", box);
+      for (let beat = Math.ceil(boxAt) + 1; beat < end; beat++) {
+        seq.push([arrow, { x: [0, 14, 0] }, { at: t(beat), duration: 0.25, ease: "easeOut" }]);
       }
     });
-    bumps(card, pb, end, 1.03);
-  };
 
-  ingredients(SLIDES[2], 6);
-  ingredients(SLIDES[3], 4);
-  ingredients(SLIDES[4], 3);
+    bumps(card, s.start + 9, end, 1.03);
+  }
 
   // 4: Sin azúcar / Sin colorantes
   {
-    const s = SLIDES[5];
+    const s = SLIDES[3];
     const slide = $("#s4");
     $$(".hl > span", slide).forEach((el, k) => {
       seq.push([el, { opacity: [0, 1], x: [-260, 0] }, { at: t(s.start + k), duration: 0.4, ease: POP }]);
@@ -188,7 +173,7 @@
 
   // 5: Ritual
   {
-    const s = SLIDES[6];
+    const s = SLIDES[4];
     const slide = $("#s5");
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
     const card = $(".card", slide);
@@ -202,7 +187,7 @@
 
   // 6: CTA
   {
-    const s = SLIDES[7];
+    const s = SLIDES[5];
     const slide = $("#s6");
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
     popIn($("#s6-escribe"), t(s.start + 1));
