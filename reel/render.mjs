@@ -66,7 +66,8 @@ if (stillsArg) {
   execFileSync("python3", [path.join(here, "beat.py"), beat, String(duration), slideStarts.join(",")]);
   execFileSync("ffmpeg", [
     "-loglevel", "error", "-y", "-i", silent, "-i", beat,
-    "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest",
+    "-c:v", "copy", "-af", "loudnorm=I=-11:TP=-1:LRA=7", "-ar", "44100",
+    "-c:a", "aac", "-b:a", "192k", "-shortest",
     path.join(out, "reel-beat.mp4"),
   ]);
   console.log("Fertig:", out);
