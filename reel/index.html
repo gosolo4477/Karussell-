@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>NoCarb-T Reel</title>
+  <style>
+    :root {
+      --orange: #ff6a00;
+      --blue: #0047ff;
+      --navy: #0a1a4f;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; }
+
+    html, body { background: #111; }
+
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      font-family: "Inter Display", "Inter", system-ui, sans-serif;
+    }
+
+    body.render { display: block; min-height: 0; }
+
+    #stage {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: var(--orange);
+    }
+
+    #track {
+      position: absolute;
+      inset: 0;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      color: var(--white);
+    }
+
+    .slide.orange { background: var(--orange); }
+    .slide.blue { background: var(--blue); }
+
+    .blob {
+      position: absolute;
+      width: 1300px;
+      height: 1300px;
+      border-radius: 50%;
+    }
+
+    .orange .blob { background: #ff8a2e; }
+    .blue .blob { background: #2a63ff; }
+
+    .ring {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 26px solid var(--white);
+      opacity: 0.15;
+    }
+
+    .hl {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      text-align: center;
+    }
+
+    .hl > span { display: block; }
+
+    .mark {
+      display: inline-block;
+      padding: 0 22px 8px;
+      border-radius: 18px;
+    }
+
+    .orange .mark { background: var(--blue); }
+    .blue .mark { background: var(--orange); }
+
+    .card {
+      position: absolute;
+      left: 50%;
+      border: 14px solid var(--white);
+      border-radius: 48px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgb(0 0 0 / 0.35);
+    }
+
+    .card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .chips {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 22px;
+    }
+
+    .chip {
+      padding: 18px 34px 22px;
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--navy);
+      font-size: 62px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .emoji {
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: "Noto Color Emoji", sans-serif;
+    }
+
+    .check {
+      display: inline-grid;
+      place-items: center;
+      width: 110px;
+      height: 110px;
+      margin-right: 24px;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--blue);
+      font-size: 84px;
+      vertical-align: middle;
+    }
+
+    .center {
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 18px 40px 22px;
+      border-radius: 999px;
+      background: var(--blue);
+      font-size: 54px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .cta-box {
+      display: inline-block;
+      padding: 20px 60px 34px;
+      border-radius: 40px;
+      background: var(--orange);
+      font-size: 168px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      box-shadow: 0 30px 0 var(--navy);
+    }
+
+    #dots {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1560px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--white);
+      opacity: 0.45;
+    }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <div id="track">
+      <!-- 1: Hook -->
+      <section class="slide orange" id="s1" style="left: 0">
+        <div class="blob" style="left: -420px; top: 900px"></div>
+        <div class="ring" style="right: -160px; top: 120px"></div>
+        <h1 class="hl" style="top: 230px; font-size: 128px">
+          <span>Lo que hago</span>
+          <span>después de</span>
+          <span><span class="mark">comer pizza</span></span>
+        </h1>
+        <div class="card" style="top: 760px; width: 560px; height: 720px; margin-left: -280px">
+          <img src="assets/pizza.jpg" alt="" style="object-position: 50% 40%" />
+        </div>
+        <div class="emoji" id="s1-emoji" style="top: 1300px; left: 640px; right: auto; font-size: 170px">🍕</div>
+      </section>
+
+      <!-- 2: Frage -->
+      <section class="slide blue" id="s2" style="left: 1080px">
+        <div class="blob" style="right: -500px; top: -300px"></div>
+        <div class="ring" style="left: -180px; top: 1180px"></div>
+        <h1 class="hl" style="top: 420px; font-size: 250px; line-height: 0.9">
+          <span>¿Sin</span>
+          <span><span class="mark">culpa?</span></span>
+        </h1>
+        <div class="emoji" id="s2-emoji" style="top: 1000px; font-size: 300px">😬</div>
+      </section>
+
+      <!-- 3: Wirkstoffe -->
+      <section class="slide orange" id="s3" style="left: 2160px">
+        <div class="blob" style="left: -500px; top: -420px"></div>
+        <div class="ring" style="right: -200px; top: 1250px"></div>
+        <h1 class="hl" style="top: 230px; font-size: 130px">
+          <span>¿Qué</span>
+          <span><span class="mark">lleva?</span></span>
+        </h1>
+        <div class="card" style="top: 600px; width: 860px; height: 480px; margin-left: -430px">
+          <img src="assets/wirkstoffe.jpg" alt="" />
+        </div>
+        <div class="chips" style="top: 1150px">
+          <span class="chip">Yacón</span>
+          <span class="chip">Fibra</span>
+          <span class="chip">Canela</span>
+          <span class="chip">Té verde</span>
+          <span class="chip">Cromo</span>
+        </div>
+      </section>
+
+      <!-- 4: Ohne -->
+      <section class="slide blue" id="s4" style="left: 3240px">
+        <div class="blob" style="left: -400px; top: 1000px"></div>
+        <div class="ring" style="right: -150px; top: 160px"></div>
+        <h1 class="hl" style="top: 600px; font-size: 92px; line-height: 1.9; text-align: left; left: 70px; right: 40px">
+          <span><span class="check">✓</span>Sin azúcar</span>
+          <span><span class="check">✓</span>Sin colorantes</span>
+        </h1>
+      </section>
+
+      <!-- 5: Ritual -->
+      <section class="slide orange" id="s5" style="left: 4320px">
+        <div class="blob" style="right: -520px; top: 980px"></div>
+        <div class="ring" style="left: -170px; top: 140px"></div>
+        <h1 class="hl" style="top: 180px; font-size: 118px">
+          <span>Mi ritual</span>
+          <span>después de</span>
+          <span><span class="mark">comer</span></span>
+        </h1>
+        <div class="card" style="top: 600px; width: 680px; height: 680px; margin-left: -340px">
+          <img src="assets/frau.jpg" alt="" style="object-position: 46% 50%" />
+        </div>
+        <div class="center" style="top: 1360px"><div class="badge">NOCARB-T · FuXion</div></div>
+        <div class="emoji" id="s5-emoji" style="top: 1130px; left: 790px; right: auto; font-size: 150px">☕</div>
+      </section>
+
+      <!-- 6: CTA -->
+      <section class="slide blue" id="s6" style="left: 5400px">
+        <div class="blob" style="left: -420px; top: -380px"></div>
+        <div class="ring" style="right: -180px; top: 1220px"></div>
+        <h1 class="hl" style="top: 260px; font-size: 120px">
+          <span>¿Quieres</span>
+          <span>saber más?</span>
+        </h1>
+        <h2 class="hl" id="s6-escribe" style="top: 620px; font-size: 90px">Escribe</h2>
+        <div class="center" style="top: 770px"><div class="cta-box">DISFRUTA</div></div>
+        <h2 class="hl" id="s6-sub" style="top: 1130px; font-size: 62px; text-transform: none; font-weight: 800">en los comentarios</h2>
+        <div class="emoji" id="s6-emoji" style="top: 1240px; font-size: 180px">👇</div>
+      </section>
+    </div>
+
+    <div id="dots"></div>
+  </div>
+
+  <script src="vendor/motion.js"></script>
+  <script src="reel.js"></script>
+</body>
+</html>
