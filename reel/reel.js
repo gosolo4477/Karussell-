@@ -17,7 +17,7 @@
     { id: "s3w", beats: 8 },
     { id: "s4", beats: 4 },
     { id: "s5", beats: 8 },
-    { id: "s6", beats: 8 },
+    { id: "s6", beats: 12 },
   ];
 
   let beat = 0;
@@ -207,19 +207,60 @@
     bumps(card, s.start + 4, s.start + s.beats, 1.04);
   }
 
-  // 6: CTA
+  // 6: CTA – "DISFRUTA" wird im Takt ins Kommentarfeld getippt und abgeschickt
   {
     const s = SLIDES[6];
     const slide = $("#s6");
-    $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
-    popIn($("#s6-escribe"), t(s.start + 1));
-    const box = $(".cta-box", slide);
-    seq.push([box, { opacity: [0, 1], scale: [0, 1.15, 1], rotate: [-8, -2] }, { at: t(s.start + 2), duration: 0.5, ease: "easeOut" }]);
-    bumps(box, s.start + 3, s.start + s.beats, 1.1);
-    popIn($("#s6-sub"), t(s.start + 3), { y: 60, scale: 0.8 });
-    const emoji = $("#s6-emoji");
-    emojiIn(emoji, t(s.start + 3.5));
-    bounce(emoji, s.start + 4, s.start + s.beats);
+    const end = s.start + s.beats;
+    $$("h1.hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
+    popIn($("#s6-sub > span"), t(s.start + 1), { y: 60, scale: 0.8 });
+    bounce($("#s6-finger"), s.start + 2, end);
+
+    const field = $(".cfield", slide);
+    seq.push([field, { opacity: [0, 1], y: [120, 0], scale: [0.8, 1] }, { at: t(s.start + 1.5), duration: 0.4, ease: POP }]);
+
+    // Tippen: ein Buchstabe pro halbem Beat, der Cursor wandert mit
+    const caret = $(".caret", slide);
+    const letters = $$(".ltr", slide);
+    const typeStart = s.start + 2;
+    letters.forEach((el, k) => {
+      const at = t(typeStart + k * 0.5);
+      seq.push([el, { opacity: [0, 1], scale: [1.6, 1], y: [-20, 0] }, { at, duration: 0.18, ease: "easeOut" }]);
+      seq.push([caret, { x: el.offsetLeft + el.offsetWidth + 4 }, { at, duration: 0.08, ease: "linear" }]);
+    });
+    const postBeat = typeStart + letters.length * 0.5; // = s.start + 6
+
+    // Cursor blinkt bis zum Abschicken
+    for (let b = s.start + 2; b < postBeat; b += 0.5) {
+      seq.push([caret, { opacity: [1, 0.15, 1] }, { at: t(b), duration: BEAT / 2, ease: "linear" }]);
+    }
+
+    // "Publicar" wird aktiv und gedrückt
+    const post = $(".cpost", slide);
+    seq.push([post, { opacity: [0.3, 1] }, { at: t(typeStart + 0.5), duration: 0.2 }]);
+    seq.push([post, { scale: [1, 0.8, 1.15, 1] }, { at: t(postBeat) - 0.15, duration: 0.35, ease: "easeOut" }]);
+
+    // Feld leert sich, Kommentar erscheint
+    letters.forEach((el) => seq.push([el, { opacity: 0 }, { at: t(postBeat) + 0.1, duration: 0.15 }]));
+    seq.push([caret, { x: 0, opacity: 1 }, { at: t(postBeat) + 0.1, duration: 0.05 }]);
+    seq.push([post, { opacity: 0.3 }, { at: t(postBeat) + 0.15, duration: 0.2 }]);
+
+    const posted = $(".posted", slide);
+    seq.push([posted, { opacity: [0, 1], y: [-160, 0], scale: [0.6, 1] }, { at: t(postBeat) + 0.1, duration: 0.45, ease: POP }]);
+
+    // Herz ploppt auf dem nächsten Beat und schlägt im Takt
+    const heart = $(".pheart", slide);
+    seq.push([heart, { opacity: [0, 1], scale: [0, 1.6, 1], rotate: [-30, 0] }, { at: t(postBeat + 1), duration: 0.4, ease: "easeOut" }]);
+    bumps(heart, postBeat + 2, end, 1.3);
+    bumps(posted, postBeat + 2, end, 1.03);
+
+    // kleine Herzen steigen auf jedem Beat auf
+    $$(".floater", slide).forEach((el, k) => {
+      const at = t(postBeat + 1 + k);
+      if (postBeat + 1 + k >= end) return;
+      const drift = k % 2 ? 60 : -60;
+      seq.push([el, { opacity: [0, 1, 0], y: [0, -380], x: [0, drift], scale: [0.6, 1.1, 0.8] }, { at, duration: 1.4, ease: "easeOut" }]);
+    });
   }
 
   // --- Abspielen / Rendern ---------------------------------------------------

@@ -322,6 +322,72 @@
 
     .chips.small .chip { font-size: 44px; }
 
+    .emo { font-family: "Noto Color Emoji", sans-serif; font-style: normal; display: inline-block; }
+
+    .cfield,
+    .posted {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      background: var(--white);
+      color: var(--navy);
+      box-shadow: 0 18px 0 var(--navy);
+    }
+
+    .cfield { z-index: 2; height: 150px; padding: 0 40px 0 30px; border-radius: 75px; }
+    .posted { padding: 28px 40px 28px 30px; border-radius: 44px; }
+
+    .avatar {
+      flex: none;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--blue));
+      border: 6px solid #fff;
+      box-shadow: 0 0 0 4px var(--orange);
+    }
+
+    .avatar.small { width: 80px; height: 80px; }
+
+    .ctext {
+      position: relative;
+      flex: 1;
+      font-size: 76px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .ltr { display: inline-block; }
+
+    .caret {
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 7px;
+      height: 78px;
+      border-radius: 4px;
+      background: var(--blue);
+    }
+
+    .cpost { font-size: 46px; font-weight: 800; color: var(--blue); }
+
+    .pbody { flex: 1; display: flex; flex-direction: column; }
+    .puser { font-size: 34px; font-weight: 700; opacity: 0.6; }
+    .ptext { font-size: 70px; font-weight: 900; line-height: 1.1; }
+    .pheart { font-size: 84px; }
+
+    .floater {
+      position: absolute;
+      right: 52px;
+      top: 40px;
+      font-size: 60px;
+      opacity: 0;
+    }
+
     #dots {
       position: absolute;
       left: 0;
@@ -450,18 +516,35 @@
         <div class="emoji" id="s5-emoji" style="top: 1130px; left: 790px; right: auto; font-size: 150px">☕</div>
       </section>
 
-      <!-- 6: CTA -->
+      <!-- 6: CTA mit Tipp-Effekt -->
       <section class="slide orange" id="s6" style="left: 6480px">
         <div class="blob" style="left: -420px; top: -380px"></div>
         <div class="ring" style="right: -180px; top: 1220px"></div>
-        <h1 class="hl" style="top: 260px; font-size: 120px">
+        <h1 class="hl" style="top: 280px; font-size: 120px">
           <span>¿Quieres</span>
-          <span>saber más?</span>
+          <span><span class="mark">saber más?</span></span>
         </h1>
-        <h2 class="hl" id="s6-escribe" style="top: 620px; font-size: 90px">Escribe</h2>
-        <div class="center" style="top: 770px"><div class="cta-box">DISFRUTA</div></div>
-        <h2 class="hl" id="s6-sub" style="top: 1130px; font-size: 62px; text-transform: none; font-weight: 800">en los comentarios</h2>
-        <div class="emoji" id="s6-emoji" style="top: 1240px; font-size: 180px">👇</div>
+        <p class="hl" id="s6-sub" style="top: 590px; font-size: 56px; text-transform: none; font-weight: 800">
+          <span>Escribe en los comentarios <i class="emo" id="s6-finger">👇</i></span>
+        </p>
+
+        <!-- nachgebautes Kommentarfeld -->
+        <div class="cfield" style="top: 760px">
+          <i class="avatar"></i>
+          <div class="ctext"><span class="ltr">D</span><span class="ltr">I</span><span class="ltr">S</span><span class="ltr">F</span><span class="ltr">R</span><span class="ltr">U</span><span class="ltr">T</span><span class="ltr">A</span><i class="caret"></i></div>
+          <b class="cpost">Publicar</b>
+        </div>
+
+        <!-- abgeschickter Kommentar -->
+        <div class="posted" style="top: 990px">
+          <i class="avatar small"></i>
+          <div class="pbody">
+            <span class="puser">tú · ahora</span>
+            <span class="ptext">DISFRUTA</span>
+          </div>
+          <i class="emo pheart">❤️</i>
+          <i class="emo floater">❤️</i><i class="emo floater">❤️</i><i class="emo floater">❤️</i><i class="emo floater">❤️</i><i class="emo floater">❤️</i>
+        </div>
       </section>
     </div>
 
