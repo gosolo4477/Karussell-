@@ -388,6 +388,32 @@
       opacity: 0;
     }
 
+    .gift {
+      display: inline-block;
+      padding: 14px 40px 18px;
+      border-radius: 999px;
+      background: var(--navy);
+      color: var(--white);
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .photo {
+      position: absolute;
+      border: 12px solid var(--white);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgb(0 0 0 / 0.35);
+    }
+
+    .photo.arch { border-radius: 200px 200px 32px 32px; }
+    .photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    .lang-de #s4 .hl { font-size: 76px !important; }
+    .lang-de #s1 .hl { font-size: 110px !important; }
+    .lang-de #s6-sub { font-size: 44px !important; }
+
     #dots {
       position: absolute;
       left: 0;
@@ -411,13 +437,13 @@
   <div id="stage">
     <div id="track">
       <!-- 1: Hook -->
-      <section class="slide orange" id="s1" style="left: 0">
+      <section class="slide" id="s1">
         <div class="blob" style="left: -420px; top: 900px"></div>
         <div class="ring" style="right: -160px; top: 120px"></div>
         <h1 class="hl" style="top: 230px; font-size: 128px">
-          <span>Lo que hago</span>
-          <span>después de</span>
-          <span><span class="mark">comer pizza</span></span>
+          <span data-t="s1_l1"></span>
+          <span data-t="s1_l2"></span>
+          <span data-t="s1_l3"></span>
         </h1>
         <div class="card" style="top: 760px; width: 560px; height: 720px; margin-left: -280px">
           <img id="s1-video" src="assets/pizza-frames/f_0001.jpg" alt="" style="object-position: 50% 30%" />
@@ -426,22 +452,22 @@
       </section>
 
       <!-- 2: Frage -->
-      <section class="slide blue" id="s2" style="left: 1080px">
+      <section class="slide" id="s2">
         <div class="blob" style="right: -500px; top: -300px"></div>
         <div class="ring" style="left: -180px; top: 1180px"></div>
         <h1 class="hl" style="top: 420px; font-size: 250px; line-height: 0.9">
-          <span>¿Sin</span>
-          <span><span class="mark">culpa?</span></span>
+          <span data-t="s2_l1"></span>
+          <span data-t="s2_l2"></span>
         </h1>
         <div class="emoji" id="s2-emoji" style="top: 1000px; font-size: 300px">😬</div>
       </section>
 
       <!-- 3: Alle Inhaltsstoffe auf einer Folie -->
-      <section class="slide orange" id="s3" style="left: 2160px">
+      <section class="slide" id="s3">
         <div class="blob" style="left: -500px; top: -420px"></div>
         <div class="ring" style="right: -200px; top: 1250px"></div>
         <h1 class="hl" style="top: 150px; font-size: 104px">
-          <span>¿Qué <span class="mark">lleva?</span></span>
+          <span data-t="s3_title"></span>
         </h1>
         <div class="card" style="top: 330px; width: 840px; height: 400px; margin-left: -420px">
           <img src="assets/wirkstoffe.jpg" alt="" />
@@ -456,58 +482,58 @@
         </div>
         <div class="groups" style="top: 790px">
           <div class="group">
-            <p class="g-head"><b class="num">1</b><b class="num">2</b><b class="num">3</b><b class="num">4</b>Fibras naturales</p>
-            <p class="g-names">Yacón · Acacia · Inulina de achicoria · Pectina de manzana</p>
-            <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Forman un gel: absorción más lenta y más saciedad</p>
+            <p class="g-head"><b class="num">1</b><b class="num">2</b><b class="num">3</b><b class="num">4</b><span data-t="g1_head"></span></p>
+            <p class="g-names" data-t="g1_names"></p>
+            <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg><span data-t="g1_row"></span></p>
           </div>
           <div class="group">
-            <p class="g-head"><b class="num">5</b><b class="num">6</b>Canela + cromo orgánico</p>
-            <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Azúcar más estable, menos antojos</p>
+            <p class="g-head"><b class="num">5</b><b class="num">6</b><span data-t="g2_head"></span></p>
+            <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg><span data-t="g2_row"></span></p>
           </div>
           <div class="group">
-            <p class="g-head"><b class="num">7</b>Té verde (EGCG)</p>
-            <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg>Activa tu metabolismo de forma suave</p>
+            <p class="g-head"><b class="num">7</b><span data-t="g3_head"></span></p>
+            <p class="p-row"><svg class="p-arrow" viewBox="0 0 60 40"><path d="M2 14 H36 V2 L58 20 L36 38 V26 H2 Z" /></svg><span data-t="g3_row"></span></p>
           </div>
         </div>
       </section>
 
       <!-- 3w: Wirkung (Bild) -->
-      <section class="slide blue" id="s3w" style="left: 3240px">
+      <section class="slide" id="s3w">
         <div class="blob" style="right: -480px; top: -380px"></div>
         <div class="ring" style="left: -190px; top: 1240px"></div>
         <h1 class="hl" style="top: 190px; font-size: 120px">
-          <span>¿Cómo</span>
-          <span><span class="mark">actúa?</span></span>
+          <span data-t="s3w_l1"></span>
+          <span data-t="s3w_l2"></span>
         </h1>
         <div class="card" style="top: 500px; width: 900px; height: 470px; margin-left: -450px">
           <img src="assets/wirkung.jpg" alt="" style="object-position: 60% 50%" />
           <i class="spark" style="left: 350px; top: 187px"></i><i class="spark" style="left: 316px; top: 294px"></i><i class="spark" style="left: 391px; top: 232px"></i><i class="spark" style="left: 329px; top: 133px"></i><i class="spark" style="left: 307px; top: 115px"></i><i class="spark" style="left: 392px; top: 250px"></i><i class="spark" style="left: 364px; top: 314px"></i><i class="spark" style="left: 485px; top: 125px"></i><i class="spark" style="left: 346px; top: 243px"></i><i class="spark" style="left: 427px; top: 202px"></i><i class="spark" style="left: 360px; top: 309px"></i><i class="spark" style="left: 334px; top: 321px"></i>
         </div>
         <div class="chips small" style="top: 1040px; flex-direction: column; align-items: center; gap: 22px">
-          <span class="chip"><b class="num">1</b>Gel natural</span>
-          <span class="chip"><b class="num">2</b>Azúcar estable</span>
-          <span class="chip"><b class="num">3</b>Metabolismo activo</span>
+          <span class="chip"><b class="num">1</b><span data-t="s3w_c1"></span></span>
+          <span class="chip"><b class="num">2</b><span data-t="s3w_c2"></span></span>
+          <span class="chip"><b class="num">3</b><span data-t="s3w_c3"></span></span>
         </div>
       </section>
 
       <!-- 4: Ohne -->
-      <section class="slide orange" id="s4" style="left: 4320px">
+      <section class="slide" id="s4">
         <div class="blob" style="left: -400px; top: 1000px"></div>
         <div class="ring" style="right: -150px; top: 160px"></div>
         <h1 class="hl" style="top: 600px; font-size: 92px; line-height: 1.9; text-align: left; left: 70px; right: 40px">
-          <span><span class="check"><svg viewBox="0 0 24 24" width="64" height="64"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Sin azúcar</span>
-          <span><span class="check"><svg viewBox="0 0 24 24" width="64" height="64"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Sin colorantes</span>
+          <span><span class="check"><svg viewBox="0 0 24 24" width="64" height="64"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-t="s4_l1"></span></span>
+          <span><span class="check"><svg viewBox="0 0 24 24" width="64" height="64"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-t="s4_l2"></span></span>
         </h1>
       </section>
 
       <!-- 5: Ritual -->
-      <section class="slide blue" id="s5" style="left: 5400px">
+      <section class="slide" id="s5">
         <div class="blob" style="right: -520px; top: 980px"></div>
         <div class="ring" style="left: -170px; top: 140px"></div>
         <h1 class="hl" style="top: 180px; font-size: 118px">
-          <span>Mi ritual</span>
-          <span>después de</span>
-          <span><span class="mark">comer</span></span>
+          <span data-t="s5_l1"></span>
+          <span data-t="s5_l2"></span>
+          <span data-t="s5_l3"></span>
         </h1>
         <div class="card" style="top: 590px; width: 600px; height: 800px; margin-left: -300px">
           <img src="assets/frau2.jpg" alt="" style="object-position: 50% 29%" />
@@ -516,31 +542,41 @@
         <div class="emoji" id="s5-emoji" style="top: 1260px; left: 760px; right: auto; font-size: 150px">☕</div>
       </section>
 
-      <!-- 6: CTA mit Tipp-Effekt -->
-      <section class="slide orange" id="s6" style="left: 6480px">
+      <!-- 6: CTA – Gratis-Ratgeber, Codewort wird im Takt getippt -->
+      <section class="slide" id="s6">
         <div class="blob" style="left: -420px; top: -380px"></div>
         <div class="ring" style="right: -180px; top: 1220px"></div>
-        <h1 class="hl" style="top: 280px; font-size: 120px">
-          <span>¿Quieres</span>
-          <span><span class="mark">saber más?</span></span>
+        <div class="center" style="top: 140px"><div class="gift" data-t="s6_gift"></div></div>
+        <h1 class="hl" style="top: 250px; font-size: 104px">
+          <span data-t="s6_l1"></span>
+          <span data-t="s6_l2"></span>
         </h1>
-        <p class="hl" id="s6-sub" style="top: 590px; font-size: 56px; text-transform: none; font-weight: 800">
-          <span>Escribe en los comentarios <i class="emo" id="s6-finger">👇</i></span>
+
+        <!-- Gisèle + Titelblatt des Ratgebers -->
+        <div class="photo arch" style="left: 110px; top: 500px; width: 380px; height: 470px">
+          <img src="assets/gisele.jpg" alt="" style="object-position: 50% 20%" />
+        </div>
+        <div class="photo" style="left: 560px; top: 500px; width: 332px; height: 470px">
+          <img src="assets/guia-cover.jpg" alt="" />
+        </div>
+
+        <p class="hl" id="s6-sub" style="top: 1015px; font-size: 50px; text-transform: none; font-weight: 800">
+          <span data-t="s6_sub"></span>
         </p>
 
         <!-- nachgebautes Kommentarfeld -->
-        <div class="cfield" style="top: 760px">
+        <div class="cfield" style="top: 1110px">
           <i class="avatar"></i>
-          <div class="ctext"><span class="ltr">D</span><span class="ltr">I</span><span class="ltr">S</span><span class="ltr">F</span><span class="ltr">R</span><span class="ltr">U</span><span class="ltr">T</span><span class="ltr">A</span><i class="caret"></i></div>
-          <b class="cpost">Publicar</b>
+          <div class="ctext"><i class="caret"></i></div>
+          <b class="cpost" data-t="s6_post"></b>
         </div>
 
         <!-- abgeschickter Kommentar -->
-        <div class="posted" style="top: 990px">
+        <div class="posted" style="top: 1300px">
           <i class="avatar small"></i>
           <div class="pbody">
-            <span class="puser">tú · ahora</span>
-            <span class="ptext">DISFRUTA</span>
+            <span class="puser" data-t="s6_user"></span>
+            <span class="ptext"></span>
           </div>
           <i class="emo pheart">❤️</i>
           <i class="emo floater">❤️</i><i class="emo floater">❤️</i><i class="emo floater">❤️</i><i class="emo floater">❤️</i><i class="emo floater">❤️</i>
@@ -551,6 +587,7 @@
     <div id="dots"></div>
   </div>
 
+  <script src="texts.js"></script>
   <script src="assets/pizza-frames/frames.js"></script>
   <script src="vendor/motion.js"></script>
   <script src="reel.js"></script>

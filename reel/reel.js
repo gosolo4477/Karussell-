@@ -9,7 +9,29 @@
   const POP = [0.34, 1.56, 0.64, 1]; // überschwingend ("backOut")
   const SNAP = [0.85, 0, 0.15, 1]; // schneller Karussell-Wisch
 
-  // Folien und ihre Länge in Beats
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+  // --- Sprache: Texte einsetzen, Folien weglassen, Codewort vorbereiten ---------
+  const params = new URLSearchParams(location.search);
+  const LANG = window.REEL_TEXTS[params.get("lang")] ? params.get("lang") : "es";
+  const TEXT = window.REEL_TEXTS[LANG];
+  document.documentElement.lang = LANG;
+  document.body.classList.add("lang-" + LANG);
+  $$("[data-t]").forEach((el) => {
+    if (TEXT[el.dataset.t] !== undefined) el.innerHTML = TEXT[el.dataset.t];
+  });
+  TEXT.skip.forEach((id) => document.getElementById(id)?.remove());
+  const caretEl = $(".ctext .caret");
+  for (const ch of TEXT.code) {
+    const l = document.createElement("span");
+    l.className = "ltr";
+    l.textContent = ch;
+    caretEl.before(l);
+  }
+  $(".ptext").textContent = TEXT.code;
+
+  // Folien und ihre Länge in Beats (weggelassene fallen raus)
   const SLIDES = [
     { id: "s1", beats: 8 },
     { id: "s2", beats: 4 },
@@ -17,8 +39,16 @@
     { id: "s3w", beats: 8 },
     { id: "s4", beats: 4 },
     { id: "s5", beats: 8 },
-    { id: "s6", beats: 12 },
-  ];
+    { id: "s6", beats: 14 },
+  ].filter((sl) => document.getElementById(sl.id));
+
+  // Position im Karussell und Farbe (Orange/Blau im Wechsel)
+  SLIDES.forEach((sl, i) => {
+    const el = document.getElementById(sl.id);
+    el.style.left = i * SLIDE_W + "px";
+    el.classList.add(i % 2 ? "blue" : "orange");
+  });
+  const byId = Object.fromEntries(SLIDES.map((sl) => [sl.id, sl]));
 
   let beat = 0;
   for (const s of SLIDES) {
@@ -27,8 +57,6 @@
   }
   const TOTAL_BEATS = beat;
 
-  const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const t = (b) => b * BEAT;
 
   const track = $("#track");
@@ -95,7 +123,7 @@
   // --- Inhalte pro Folie ------------------------------------------------------
   // 1: Hook
   {
-    const s = SLIDES[0];
+    const s = byId.s1;
     const slide = $("#s1");
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
     const card = $(".card", slide);
@@ -108,7 +136,7 @@
 
   // 2: ¿Sin culpa?
   {
-    const s = SLIDES[1];
+    const s = byId.s2;
     const slide = $("#s2");
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5), { y: 200, scale: 0.4 }));
     const emoji = $("#s2-emoji");
@@ -118,7 +146,7 @@
 
   // 3: Alle Inhaltsstoffe -> Punkte im Bild + drei Gruppen-Kästen im Takt
   {
-    const s = SLIDES[2];
+    const s = byId.s3;
     const slide = $("#s3");
     const end = s.start + s.beats;
     $$(".hl > span", slide).forEach((el) => popIn(el, t(s.start)));
@@ -160,9 +188,9 @@
     bumps(card, s.start + 9, end, 1.03);
   }
 
-  // 3w: Wirkungs-Bild mit Glitzer im Takt
-  {
-    const s = SLIDES[3];
+  // 3w: Wirkungs-Bild mit Glitzer im Takt (nicht in jeder Sprachversion)
+  if (byId.s3w) {
+    const s = byId.s3w;
     const slide = $("#s3w");
     const end = s.start + s.beats;
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
@@ -183,7 +211,7 @@
 
   // 4: Sin azúcar / Sin colorantes
   {
-    const s = SLIDES[4];
+    const s = byId.s4;
     const slide = $("#s4");
     $$(".hl > span", slide).forEach((el, k) => {
       seq.push([el, { opacity: [0, 1], x: [-260, 0] }, { at: t(s.start + k), duration: 0.4, ease: POP }]);
@@ -195,7 +223,7 @@
 
   // 5: Ritual
   {
-    const s = SLIDES[5];
+    const s = byId.s5;
     const slide = $("#s5");
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
     const card = $(".card", slide);
@@ -207,31 +235,41 @@
     bumps(card, s.start + 4, s.start + s.beats, 1.04);
   }
 
-  // 6: CTA – "DISFRUTA" wird im Takt ins Kommentarfeld getippt und abgeschickt
+  // 6: CTA – Gratis-Ratgeber; das Codewort wird im Takt getippt und abgeschickt
   {
-    const s = SLIDES[6];
+    const s = byId.s6;
     const slide = $("#s6");
     const end = s.start + s.beats;
-    $$("h1.hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
-    popIn($("#s6-sub > span"), t(s.start + 1), { y: 60, scale: 0.8 });
-    bounce($("#s6-finger"), s.start + 2, end);
+    popIn($(".gift", slide), t(s.start), { y: 60, scale: 0.4 });
+    $$("h1.hl > span", slide).forEach((el, k) => popIn(el, t(s.start + 0.5 + k * 0.5)));
+
+    // Gisèle und das Titelblatt fliegen schräg rein und wippen abwechselnd im Takt
+    const photos = $$(".photo", slide);
+    seq.push([photos[0], { opacity: [0, 1], scale: [0.3, 1], rotate: [-20, -4] }, { at: t(s.start + 1.5), duration: 0.5, ease: POP }]);
+    seq.push([photos[1], { opacity: [0, 1], scale: [0.3, 1], rotate: [20, 5] }, { at: t(s.start + 2), duration: 0.5, ease: POP }]);
+    for (let b = s.start + 4; b < end; b++) {
+      seq.push([photos[b % 2], { scale: [1, 1.05, 1] }, { at: t(b), duration: 0.22, ease: "easeOut" }]);
+    }
+
+    popIn($("#s6-sub > span"), t(s.start + 2.5), { y: 60, scale: 0.8 });
+    bounce($("#s6-finger"), s.start + 3, end);
 
     const field = $(".cfield", slide);
-    seq.push([field, { opacity: [0, 1], y: [120, 0], scale: [0.8, 1] }, { at: t(s.start + 1.5), duration: 0.4, ease: POP }]);
+    seq.push([field, { opacity: [0, 1], y: [120, 0], scale: [0.8, 1] }, { at: t(s.start + 3), duration: 0.4, ease: POP }]);
 
     // Tippen: ein Buchstabe pro halbem Beat, der Cursor wandert mit
     const caret = $(".caret", slide);
     const letters = $$(".ltr", slide);
-    const typeStart = s.start + 2;
+    const typeStart = s.start + 3.5;
     letters.forEach((el, k) => {
       const at = t(typeStart + k * 0.5);
       seq.push([el, { opacity: [0, 1], scale: [1.6, 1], y: [-20, 0] }, { at, duration: 0.18, ease: "easeOut" }]);
       seq.push([caret, { x: el.offsetLeft + el.offsetWidth + 4 }, { at, duration: 0.08, ease: "linear" }]);
     });
-    const postBeat = typeStart + letters.length * 0.5; // = s.start + 6
+    const postBeat = typeStart + letters.length * 0.5;
 
     // Cursor blinkt bis zum Abschicken
-    for (let b = s.start + 2; b < postBeat; b += 0.5) {
+    for (let b = typeStart; b < postBeat; b += 0.5) {
       seq.push([caret, { opacity: [1, 0.15, 1] }, { at: t(b), duration: BEAT / 2, ease: "linear" }]);
     }
 
@@ -265,7 +303,7 @@
 
   // --- Abspielen / Rendern ---------------------------------------------------
   const duration = t(TOTAL_BEATS);
-  const render = new URLSearchParams(location.search).has("render");
+  const render = params.has("render");
   if (render) document.body.classList.add("render");
 
   const controls = animate(seq, { repeat: render ? 0 : Infinity });
@@ -300,6 +338,7 @@
 
   window.reel = {
     bpm: BPM,
+    lang: LANG,
     duration,
     slideStarts: SLIDES.slice(1).map((sl) => t(sl.start)),
     ready: () => Promise.all(frames.map((img) => img.decode().catch(() => {}))),
