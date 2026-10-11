@@ -116,12 +116,64 @@
       gap: 22px;
     }
 
+    .spot {
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+
+    .spot b,
+    .spot .ripple {
+      position: absolute;
+      left: -32px;
+      top: -32px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+
+    .spot b {
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      border: 6px solid var(--white);
+      color: var(--white);
+      font-size: 32px;
+      font-weight: 900;
+      box-shadow: 0 6px 16px rgb(0 0 0 / 0.35);
+    }
+
+    .spot .ripple {
+      border: 6px solid var(--blue);
+      opacity: 0;
+    }
+
+    .num {
+      display: inline-grid;
+      place-items: center;
+      width: 50px;
+      height: 50px;
+      margin-right: 12px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 30px;
+      vertical-align: 5px;
+    }
+
+    .arrow {
+      position: absolute;
+      left: 495px;
+      width: 90px;
+      height: 110px;
+    }
+
     .chip {
-      padding: 18px 34px 22px;
+      padding: 14px 30px 18px;
       border-radius: 999px;
       background: var(--white);
       color: var(--navy);
-      font-size: 62px;
+      font-size: 50px;
       font-weight: 900;
       text-transform: uppercase;
     }
@@ -234,13 +286,22 @@
         </h1>
         <div class="card" style="top: 600px; width: 860px; height: 480px; margin-left: -430px">
           <img src="assets/wirkstoffe.jpg" alt="" />
+          <!-- Punkte auf den Zutaten im Bild (Position im 832x452-Innenbereich) -->
+          <div class="spot" style="left: 254px; top: 163px"><i class="ripple"></i><b>1</b></div>
+          <div class="spot" style="left: 623px; top: 60px"><i class="ripple"></i><b>2</b></div>
+          <div class="spot" style="left: 562px; top: 199px"><i class="ripple"></i><b>3</b></div>
+          <div class="spot" style="left: 172px; top: 375px"><i class="ripple"></i><b>4</b></div>
+          <div class="spot" style="left: 215px; top: 85px"><i class="ripple"></i><b>5</b></div>
         </div>
-        <div class="chips" style="top: 1150px">
-          <span class="chip">Yacón</span>
-          <span class="chip">Fibra</span>
-          <span class="chip">Canela</span>
-          <span class="chip">Té verde</span>
-          <span class="chip">Cromo</span>
+        <svg class="arrow" style="top: 1100px" viewBox="0 0 90 110" aria-hidden="true">
+          <path d="M45 6 L84 52 H60 V104 H30 V52 H6 Z" fill="#fff" />
+        </svg>
+        <div class="chips" style="top: 1240px; left: 30px; right: 30px; gap: 18px">
+          <span class="chip"><b class="num">1</b>Yacón</span>
+          <span class="chip"><b class="num">2</b>Fibra</span>
+          <span class="chip"><b class="num">3</b>Canela</span>
+          <span class="chip"><b class="num">4</b>Té verde</span>
+          <span class="chip"><b class="num">5</b>Cromo</span>
         </div>
       </section>
 

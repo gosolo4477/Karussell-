@@ -122,8 +122,32 @@
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
     const card = $(".card", slide);
     cardIn(card, t(s.start + 1), 2);
-    $$(".chip", slide).forEach((el, k) => popIn(el, t(s.start + 2 + k * 0.5), { y: 80, scale: 0.3 }));
-    bumps(card, s.start + 5, s.start + s.beats, 1.04);
+    const end = s.start + s.beats;
+    const spots = $$(".spot b", slide);
+    const ripples = $$(".spot .ripple", slide);
+
+    // Chip und passender Punkt im Bild erscheinen gemeinsam, jeweils auf dem halben Beat
+    $$(".chip", slide).forEach((el, k) => {
+      const b = s.start + 2 + k * 0.5;
+      popIn(el, t(b), { y: 80, scale: 0.3 });
+      seq.push([spots[k], { opacity: [0, 1], scale: [0, 1.3, 1] }, { at: t(b), duration: 0.35, ease: "easeOut" }]);
+      seq.push([ripples[k], { opacity: [0, 0.9, 0], scale: [1, 1, 2.4] }, { at: t(b), duration: 0.45, times: [0, 0.05, 1], ease: "easeOut" }]);
+
+      // danach: Puls + Welle auf jedem vollen Beat
+      for (let beat = Math.floor(b) + 1; beat < end; beat++) {
+        seq.push([spots[k], { scale: [1, 1.25, 1] }, { at: t(beat), duration: 0.22, ease: "easeOut" }]);
+        seq.push([ripples[k], { opacity: [0, 0.9, 0], scale: [1, 1, 2.4] }, { at: t(beat), duration: 0.45, times: [0, 0.05, 1], ease: "easeOut" }]);
+      }
+    });
+
+    // Pfeil zeigt von den Chips aufs Bild und hüpft im Takt
+    const arrow = $(".arrow", slide);
+    seq.push([arrow, { opacity: [0, 1], scale: [0, 1] }, { at: t(s.start + 2), duration: 0.3, ease: POP }]);
+    for (let beat = s.start + 3; beat < end; beat++) {
+      seq.push([arrow, { y: [0, -34, 0] }, { at: t(beat), duration: 0.3, ease: "easeOut" }]);
+    }
+
+    bumps(card, s.start + 5, end, 1.04);
   }
 
   // 4: Sin azúcar / Sin colorantes
