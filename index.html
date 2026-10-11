@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Motion Karussell</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>Motion Karussell</h1>
+
+    <section class="carousel" aria-roledescription="carousel" aria-label="Bildergalerie">
+      <div class="carousel__viewport">
+        <ul class="carousel__track">
+          <li class="carousel__slide" style="--hue: 12">
+            <div class="slide__card">
+              <span class="slide__eyebrow">01</span>
+              <h2>Willkommen</h2>
+              <p>Wische, klicke oder nutze die Pfeiltasten.</p>
+            </div>
+          </li>
+          <li class="carousel__slide" style="--hue: 200">
+            <div class="slide__card">
+              <span class="slide__eyebrow">02</span>
+              <h2>Federnd</h2>
+              <p>Jeder Wechsel läuft über eine Spring-Animation von Motion.</p>
+            </div>
+          </li>
+          <li class="carousel__slide" style="--hue: 140">
+            <div class="slide__card">
+              <span class="slide__eyebrow">03</span>
+              <h2>Ziehbar</h2>
+              <p>Mit Maus oder Finger ziehen – schnelles Wischen zählt auch.</p>
+            </div>
+          </li>
+          <li class="carousel__slide" style="--hue: 280">
+            <div class="slide__card">
+              <span class="slide__eyebrow">04</span>
+              <h2>Autoplay</h2>
+              <p>Läuft von selbst und pausiert, sobald du darüber fährst.</p>
+            </div>
+          </li>
+          <li class="carousel__slide" style="--hue: 40">
+            <div class="slide__card">
+              <span class="slide__eyebrow">05</span>
+              <h2>Rundlauf</h2>
+              <p>Nach der letzten Folie geht es zurück zum Anfang.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Vorherige Folie">‹</button>
+      <button class="carousel__btn carousel__btn--next" type="button" aria-label="Nächste Folie">›</button>
+      <div class="carousel__dots" role="tablist" aria-label="Folie auswählen"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/motion@12.23.24/dist/motion.js"></script>
+  <script src="carousel.js"></script>
+</body>
+</html>
