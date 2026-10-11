@@ -27,6 +27,7 @@ await page.goto(pathToFileURL(path.join(here, "index.html")).href + "?render=1")
 await page.evaluate(async () => {
   await document.fonts.ready;
   await Promise.all(Array.from(document.images).map((img) => img.decode().catch(() => {})));
+  await window.reel.ready();
 });
 const { duration, slideStarts } = await page.evaluate(() => ({ duration: window.reel.duration, slideStarts: window.reel.slideStarts }));
 const stage = page.locator("#stage");

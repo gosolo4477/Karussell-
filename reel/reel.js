@@ -271,12 +271,41 @@
   const controls = animate(seq, { repeat: render ? 0 : Infinity });
   if (render) controls.pause();
 
+  // Pizza-Video auf Folie 1 als Einzelbild-Folge (Zeitlupe, 30 fps), startet mit der Karte
+  const video = $("#s1-video");
+  const VIDEO_START = t(SLIDES[0].start + 2);
+  const FRAME_COUNT = window.PIZZA_FRAMES || 1;
+  const frameSrc = (i) => `assets/pizza-frames/f_${String(i + 1).padStart(4, "0")}.jpg`;
+  const frames = Array.from({ length: FRAME_COUNT }, (_, i) => {
+    const img = new Image();
+    img.src = frameSrc(i);
+    return img;
+  });
+  let shownFrame = 0;
+  const showFrame = (time) => {
+    const i = Math.min(FRAME_COUNT - 1, Math.max(0, Math.floor((time - VIDEO_START) * 30)));
+    if (i === shownFrame) return Promise.resolve();
+    shownFrame = i;
+    video.src = frames[i].src;
+    return video.decode().catch(() => {});
+  };
+
+  if (!render) {
+    const tick = () => {
+      showFrame(controls.time % duration);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
   window.reel = {
     bpm: BPM,
     duration,
     slideStarts: SLIDES.slice(1).map((sl) => t(sl.start)),
+    ready: () => Promise.all(frames.map((img) => img.decode().catch(() => {}))),
     seek(time) {
       controls.time = time;
+      return showFrame(time);
     },
   };
 })();
