@@ -310,6 +310,18 @@
     .spot b, .spot .ripple { left: -27px; top: -27px; width: 54px; height: 54px; }
     .spot b { font-size: 28px; border-width: 5px; }
 
+    .spark {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      margin: -13px 0 0 -13px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0 25%, #ffd84a 45%, rgb(255 216 74 / 0) 70%);
+      opacity: 0;
+    }
+
+    .chips.small .chip { font-size: 44px; }
+
     #dots {
       position: absolute;
       left: 0;
@@ -393,8 +405,27 @@
         </div>
       </section>
 
+      <!-- 3w: Wirkung (Bild) -->
+      <section class="slide blue" id="s3w" style="left: 3240px">
+        <div class="blob" style="right: -480px; top: -380px"></div>
+        <div class="ring" style="left: -190px; top: 1240px"></div>
+        <h1 class="hl" style="top: 190px; font-size: 120px">
+          <span>¿Cómo</span>
+          <span><span class="mark">actúa?</span></span>
+        </h1>
+        <div class="card" style="top: 500px; width: 900px; height: 470px; margin-left: -450px">
+          <img src="assets/wirkung.jpg" alt="" style="object-position: 60% 50%" />
+          <i class="spark" style="left: 350px; top: 187px"></i><i class="spark" style="left: 316px; top: 294px"></i><i class="spark" style="left: 391px; top: 232px"></i><i class="spark" style="left: 329px; top: 133px"></i><i class="spark" style="left: 307px; top: 115px"></i><i class="spark" style="left: 392px; top: 250px"></i><i class="spark" style="left: 364px; top: 314px"></i><i class="spark" style="left: 485px; top: 125px"></i><i class="spark" style="left: 346px; top: 243px"></i><i class="spark" style="left: 427px; top: 202px"></i><i class="spark" style="left: 360px; top: 309px"></i><i class="spark" style="left: 334px; top: 321px"></i>
+        </div>
+        <div class="chips small" style="top: 1040px; flex-direction: column; align-items: center; gap: 22px">
+          <span class="chip"><b class="num">1</b>Gel natural</span>
+          <span class="chip"><b class="num">2</b>Azúcar estable</span>
+          <span class="chip"><b class="num">3</b>Metabolismo activo</span>
+        </div>
+      </section>
+
       <!-- 4: Ohne -->
-      <section class="slide blue" id="s4" style="left: 3240px">
+      <section class="slide orange" id="s4" style="left: 4320px">
         <div class="blob" style="left: -400px; top: 1000px"></div>
         <div class="ring" style="right: -150px; top: 160px"></div>
         <h1 class="hl" style="top: 600px; font-size: 92px; line-height: 1.9; text-align: left; left: 70px; right: 40px">
@@ -404,7 +435,7 @@
       </section>
 
       <!-- 5: Ritual -->
-      <section class="slide orange" id="s5" style="left: 4320px">
+      <section class="slide blue" id="s5" style="left: 5400px">
         <div class="blob" style="right: -520px; top: 980px"></div>
         <div class="ring" style="left: -170px; top: 140px"></div>
         <h1 class="hl" style="top: 180px; font-size: 118px">
@@ -420,7 +451,7 @@
       </section>
 
       <!-- 6: CTA -->
-      <section class="slide blue" id="s6" style="left: 5400px">
+      <section class="slide orange" id="s6" style="left: 6480px">
         <div class="blob" style="left: -420px; top: -380px"></div>
         <div class="ring" style="right: -180px; top: 1220px"></div>
         <h1 class="hl" style="top: 260px; font-size: 120px">

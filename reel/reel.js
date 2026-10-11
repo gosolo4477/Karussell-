@@ -14,6 +14,7 @@
     { id: "s1", beats: 8 },
     { id: "s2", beats: 4 },
     { id: "s3", beats: 16 },
+    { id: "s3w", beats: 8 },
     { id: "s4", beats: 4 },
     { id: "s5", beats: 8 },
     { id: "s6", beats: 8 },
@@ -159,9 +160,30 @@
     bumps(card, s.start + 9, end, 1.03);
   }
 
-  // 4: Sin azúcar / Sin colorantes
+  // 3w: Wirkungs-Bild mit Glitzer im Takt
   {
     const s = SLIDES[3];
+    const slide = $("#s3w");
+    const end = s.start + s.beats;
+    $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
+    const card = $(".card", slide);
+    cardIn(card, t(s.start + 1), -2);
+    $$(".spark", slide).forEach((el, k) => {
+      for (let b = s.start + 2 + (k % 4) * 0.25; b < end; b += 1) {
+        seq.push([el, { opacity: [0, 1, 0], scale: [0.2, 1.4, 0.2] }, { at: t(b), duration: 0.4, ease: "easeOut" }]);
+      }
+    });
+    $$(".chip", slide).forEach((el, k) => {
+      const b = s.start + 3 + k;
+      popIn(el, t(b), { y: 80, scale: 0.3 });
+      bumps(el, b + 1, end, 1.05);
+    });
+    bumps(card, s.start + 3, end, 1.03);
+  }
+
+  // 4: Sin azúcar / Sin colorantes
+  {
+    const s = SLIDES[4];
     const slide = $("#s4");
     $$(".hl > span", slide).forEach((el, k) => {
       seq.push([el, { opacity: [0, 1], x: [-260, 0] }, { at: t(s.start + k), duration: 0.4, ease: POP }]);
@@ -173,7 +195,7 @@
 
   // 5: Ritual
   {
-    const s = SLIDES[4];
+    const s = SLIDES[5];
     const slide = $("#s5");
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
     const card = $(".card", slide);
@@ -187,7 +209,7 @@
 
   // 6: CTA
   {
-    const s = SLIDES[5];
+    const s = SLIDES[6];
     const slide = $("#s6");
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
     popIn($("#s6-escribe"), t(s.start + 1));
