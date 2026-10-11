@@ -15,6 +15,7 @@
     { id: "s2", beats: 4 },
     { id: "s3", beats: 14 },
     { id: "s3b", beats: 12 },
+    { id: "s3c", beats: 10 },
     { id: "s4", beats: 4 },
     { id: "s5", beats: 8 },
     { id: "s6", beats: 8 },
@@ -171,10 +172,11 @@
 
   ingredients(SLIDES[2], 6);
   ingredients(SLIDES[3], 4);
+  ingredients(SLIDES[4], 3);
 
   // 4: Sin azúcar / Sin colorantes
   {
-    const s = SLIDES[4];
+    const s = SLIDES[5];
     const slide = $("#s4");
     $$(".hl > span", slide).forEach((el, k) => {
       seq.push([el, { opacity: [0, 1], x: [-260, 0] }, { at: t(s.start + k), duration: 0.4, ease: POP }]);
@@ -186,7 +188,7 @@
 
   // 5: Ritual
   {
-    const s = SLIDES[5];
+    const s = SLIDES[6];
     const slide = $("#s5");
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
     const card = $(".card", slide);
@@ -200,7 +202,7 @@
 
   // 6: CTA
   {
-    const s = SLIDES[6];
+    const s = SLIDES[7];
     const slide = $("#s6");
     $$(".hl > span", slide).forEach((el, k) => popIn(el, t(s.start + k * 0.5)));
     popIn($("#s6-escribe"), t(s.start + 1));
