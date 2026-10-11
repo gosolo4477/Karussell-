@@ -28,7 +28,7 @@ await page.evaluate(async () => {
   await document.fonts.ready;
   await Promise.all(Array.from(document.images).map((img) => img.decode().catch(() => {})));
 });
-const duration = await page.evaluate(() => window.reel.duration);
+const { duration, slideStarts } = await page.evaluate(() => ({ duration: window.reel.duration, slideStarts: window.reel.slideStarts }));
 const stage = page.locator("#stage");
 
 const seek = async (time) => {
@@ -63,7 +63,7 @@ if (stillsArg) {
 
   // Beat-Spur erzeugen und dazumischen
   const beat = path.join(out, "beat.wav");
-  execFileSync("python3", [path.join(here, "beat.py"), beat, String(duration)]);
+  execFileSync("python3", [path.join(here, "beat.py"), beat, String(duration), slideStarts.join(",")]);
   execFileSync("ffmpeg", [
     "-loglevel", "error", "-y", "-i", silent, "-i", beat,
     "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest",

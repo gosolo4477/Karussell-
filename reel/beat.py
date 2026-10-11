@@ -1,6 +1,6 @@
 """Erzeugt eine einfache 120-BPM-Beat-Spur (Kick, Clap, Hi-Hat, Whoosh vor jedem Folienwechsel).
 
-Aufruf: python3 beat.py <ausgabe.wav> <dauer_in_sekunden>
+Aufruf: python3 beat.py <ausgabe.wav> <dauer_in_sekunden> [wechsel_in_sekunden,kommagetrennt]
 """
 import sys
 import wave
@@ -10,10 +10,9 @@ import numpy as np
 SR = 44100
 BPM = 120
 BEAT = 60 / BPM
-# Folienwechsel in Beats (muss zu SLIDES in reel.js passen)
-SLIDE_STARTS = [8, 12, 20, 24, 32]
-
 out, duration = sys.argv[1], float(sys.argv[2])
+# Folienwechsel in Sekunden (kommt aus reel.js)
+SLIDE_STARTS = [float(x) for x in sys.argv[3].split(",")] if len(sys.argv) > 3 else []
 n = int(SR * duration)
 mix = np.zeros(n)
 rng = np.random.default_rng(7)
@@ -61,8 +60,8 @@ for b in range(beats):
         add(clap(), at)
     add(hat(), at + BEAT / 2)
 
-for b in SLIDE_STARTS:
-    add(whoosh(), b * BEAT - 0.3)
+for at in SLIDE_STARTS:
+    add(whoosh(), at - 0.3)
 
 # sanft ausblenden
 fade = int(0.4 * SR)
