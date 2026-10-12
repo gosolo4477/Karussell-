@@ -244,9 +244,9 @@
     const end = s.start + s.beats;
     popIn($(".gift", slide), t(s.start), { y: 60, scale: 0.4 });
     $$("h1.hl > span", slide).forEach((el, k) => popIn(el, t(s.start + 0.5 + k * 0.5)));
-    popIn($("#s6-sub > span"), t(s.start + 2), { y: 60, scale: 0.8 });
+    popIn($("#s6-sub > span"), t(s.start + 2.5), { y: 60, scale: 0.8 });
     const cta = $("#s6-cta > span");
-    popIn(cta, t(s.start + 2.5), { y: 80, scale: 0.4 });
+    popIn(cta, t(s.start + 3), { y: 80, scale: 0.4 });
     bumps(cta, s.start + 4, end, 1.06);
     bounce($("#s6-finger"), s.start + 3, end);
 
