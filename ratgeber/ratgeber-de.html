@@ -206,6 +206,14 @@
   #p7 .three div { border-top: 3px solid rgba(255,255,255,.6); padding-top: 9px; }
   #p7 .three b { display: block; font-size: 16px; font-weight: 900; text-transform: uppercase; }
   #p7 .three span { font-size: 12.8px; line-height: 1.4; font-weight: 500; }
+  #p7 .points { margin-top: 28px; background: var(--navy); border-radius: 20px; padding: 18px 22px; display: flex; gap: 22px; align-items: center; text-align: left; box-shadow: 7px 7px 0 var(--blue); }
+  #p7 .points .txt { flex: 1; }
+  #p7 .points b { display: block; font-size: 20px; font-weight: 900; text-transform: uppercase; line-height: 1.1; }
+  #p7 .points p { font-size: 14px; line-height: 1.42; font-weight: 500; margin-top: 6px; }
+  #p7 .track { display: flex; align-items: center; flex: none; }
+  #p7 .pt { width: 52px; height: 52px; border-radius: 50%; background: var(--orange); display: grid; place-items: center; font-weight: 900; font-size: 17px; }
+  #p7 .pt.goal { width: 64px; height: 64px; background: var(--white); font-size: 32px; }
+  #p7 .dash { width: 14px; height: 4px; background: rgba(255,255,255,.5); }
   #p7 .fine { position: absolute; left: 54px; right: 54px; bottom: 48px; }
 </style>
 </head>
@@ -393,12 +401,11 @@
     </div>
     <div><div class="card qr"><img src="assets/qr.svg" alt="QR-Code zum Shop"></div><div class="qrcap">Scannen &amp; bestellen</div></div>
   </div>
-  <div class="three">
-    <div><b>Einfach</b><span>Ein Stick, ein Glas Wasser, zwei Minuten.</span></div>
-    <div><b>Angenehm</b><span>Schmeckt nach Apfel-Zimt-Tee, warm oder kalt.</span></div>
-    <div><b>Durchdacht</b><span>Ballaststoffe, Zimt, grüner Tee und Chrom in einer Rezeptur.</span></div>
+  <div class="points">
+    <div class="txt"><b><span class="emo">🎁</span> Punkte sammeln</b><p>Für jedes Produkt bekommst du <strong>20 Punkte</strong>. Sobald du <strong>80 Punkte</strong> hast, gibt es ein Produkt deiner Wahl.</p></div>
+    <div class="track"><span class="pt">20</span><i class="dash"></i><span class="pt">40</span><i class="dash"></i><span class="pt">60</span><i class="dash"></i><span class="pt">80</span><i class="dash"></i><span class="pt goal emo">🎁</span></div>
   </div>
-  <p class="fine">Preis und Versand laut aktuellem Angebot im Shop. Nahrungsergänzungsmittel sind kein Ersatz für eine ausgewogene und abwechslungsreiche Ernährung sowie eine gesunde Lebensweise. Die angegebene empfohlene tägliche Verzehrmenge darf nicht überschritten werden. Außerhalb der Reichweite von kleinen Kindern aufbewahren.</p>
+  <p class="fine">Preis, Versand und Punkteprogramm laut aktuellem Angebot im Shop. Nahrungsergänzungsmittel sind kein Ersatz für eine ausgewogene und abwechslungsreiche Ernährung sowie eine gesunde Lebensweise. Die angegebene empfohlene tägliche Verzehrmenge darf nicht überschritten werden. Außerhalb der Reichweite von kleinen Kindern aufbewahren.</p>
   <div class="foot"><span>Gisèle · Heilpraktikerin</span><span>NoCarb-T · Seite 7</span></div>
 </section>
 
