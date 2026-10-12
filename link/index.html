@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoCarb-T · Tienda</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { --orange: #ff6a00; --blue: #0047ff; --navy: #0a1a4f; --white: #fff; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh; background: var(--orange); color: var(--white);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex; flex-direction: column; align-items: center; padding: 40px 16px;
+  }
+  .kicker { background: var(--navy); border-radius: 999px; padding: 7px 14px; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+  h1 { font-size: clamp(34px, 9vw, 52px); font-weight: 900; text-transform: uppercase; line-height: 1.02; text-align: center; margin-top: 16px; }
+  .mark { display: inline-block; background: var(--blue); padding: 0 .16em; border-radius: .12em; transform: rotate(-2deg); box-shadow: 4px 4px 0 var(--navy); }
+  #status { margin-top: 18px; font-weight: 600; font-size: 16px; text-align: center; min-height: 1.4em; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 420px; margin-top: 22px; }
+  .grid a {
+    display: flex; align-items: center; gap: 10px; background: var(--white); color: var(--navy);
+    text-decoration: none; font-weight: 800; font-size: 16px; padding: 14px; border-radius: 16px;
+    box-shadow: 5px 5px 0 var(--navy);
+  }
+  .grid a.hit { outline: 4px solid var(--blue); }
+  .grid span { font-size: 24px; }
+  footer { margin-top: auto; padding-top: 32px; font-size: 12px; font-weight: 700; opacity: .85; text-align: center; }
+</style>
+</head>
+<body>
+  <span class="kicker">NoCarb-T · FuXion</span>
+  <h1>Tu tienda<br><span class="mark">oficial</span></h1>
+  <p id="status">Elige tu país:</p>
+  <nav class="grid" id="grid"></nav>
+  <footer>Gisèle · Heilpraktikerin</footer>
+
+<script>
+  // Shop-Links pro Land. Neues Land: Eintrag ergänzen (url + Zeitzonen).
+  const BASE = "https://tiendafuxion.com/storelt/giselebreton/";
+  const SHOPS = {
+    ar: { name: "Argentina", flag: "🇦🇷", id: "3186816", tz: [/^America\/Argentina\//, "America/Buenos_Aires", "America/Cordoba", "America/Mendoza"] },
+    bo: { name: "Bolivia",   flag: "🇧🇴", id: "3186818", tz: ["America/La_Paz"] },
+    cl: { name: "Chile",     flag: "🇨🇱", id: "3186819", tz: ["America/Santiago", "America/Punta_Arenas", "Pacific/Easter"] },
+    co: { name: "Colombia",  flag: "🇨🇴", id: "3186821", tz: ["America/Bogota"] },
+    pa: { name: "Panamá",    flag: "🇵🇦", id: "3186823", tz: ["America/Panama"] },
+    pe: { name: "Perú",      flag: "🇵🇪", id: "3186826", tz: ["America/Lima"] },
+    de: { name: "Deutschland", flag: "🇩🇪", id: "3185933", tz: ["Europe/Berlin", "Europe/Busingen"] },
+  };
+
+  // Land erkennen: 1) ?pais=cl im Link, 2) Zeitzone des Handys, 3) Sprache (z. B. es-CO)
+  function detect() {
+    const q = new URLSearchParams(location.search).get("pais") || new URLSearchParams(location.search).get("land");
+    if (q && SHOPS[q.toLowerCase()]) return q.toLowerCase();
+    let tz = "";
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+    for (const [code, s] of Object.entries(SHOPS)) {
+      if (s.tz.some((t) => (t instanceof RegExp ? t.test(tz) : t === tz))) return code;
+    }
+    for (const lang of navigator.languages || [navigator.language || ""]) {
+      const region = (lang.split("-")[1] || "").toLowerCase();
+      if (SHOPS[region]) return region;
+    }
+    return null;
+  }
+
+  const grid = document.getElementById("grid");
+  for (const [code, s] of Object.entries(SHOPS)) {
+    const a = document.createElement("a");
+    a.href = BASE + s.id;
+    a.id = "c-" + code;
+    a.innerHTML = `<span>${s.flag}</span>${s.name}`;
+    grid.appendChild(a);
+  }
+
+  const hit = detect();
+  if (hit) {
+    const s = SHOPS[hit];
+    document.getElementById("c-" + hit).classList.add("hit");
+    document.getElementById("status").textContent =
+      hit === "de" ? `${s.flag} Weiterleitung zum Shop für ${s.name} …` : `${s.flag} Te llevamos a la tienda de ${s.name} …`;
+    setTimeout(() => location.replace(BASE + s.id), 1200);
+  }
+</script>
+</body>
+</html>
