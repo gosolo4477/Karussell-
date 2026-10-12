@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>NoCarb-T Ratgeber</title>
+<style>
+  :root {
+    --orange: #ff6a00;
+    --blue: #0047ff;
+    --navy: #0a1a4f;
+    --white: #ffffff;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #888; }
+  body {
+    font-family: "Inter Display", "Inter", system-ui, sans-serif;
+    color: var(--white);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm; height: 297mm;
+    position: relative; overflow: hidden;
+    padding: 50px 54px 0;
+    break-after: page;
+  }
+  .page:last-child { break-after: auto; }
+  .orange { background: var(--orange); --accent: var(--blue); }
+  .blue { background: var(--blue); --accent: var(--orange); }
+
+  /* Deko wie im Reel */
+  .blob { position: absolute; border-radius: 50%; background: rgba(255,255,255,.10); z-index: 0; }
+  .ring { position: absolute; border-radius: 50%; border: 10px solid rgba(255,255,255,.14); z-index: 0; }
+  :where(.page > *:not(.blob):not(.ring)) { position: relative; z-index: 1; }
+
+  .kicker {
+    display: inline-block; background: var(--navy); color: var(--white);
+    font-weight: 800; font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 8px 16px; border-radius: 999px;
+  }
+  h1, h2 {
+    font-weight: 900; text-transform: uppercase; line-height: 1.02; letter-spacing: -.01em;
+  }
+  h1 { font-size: 64px; }
+  h2 { font-size: 44px; margin-top: 14px; }
+  .mark {
+    display: inline-block; background: var(--accent); color: var(--white);
+    padding: 0 .16em; border-radius: .12em; transform: rotate(-2deg);
+    box-shadow: 5px 5px 0 var(--navy);
+  }
+  .lead { font-size: 17px; line-height: 1.45; font-weight: 600; margin-top: 12px; max-width: 610px; }
+
+  .card {
+    background: var(--white); color: var(--navy);
+    border-radius: 20px; box-shadow: 7px 7px 0 var(--navy);
+  }
+  .photo { border: 8px solid var(--white); border-radius: 26px; overflow: hidden; box-shadow: 8px 8px 0 var(--navy); background: var(--white); }
+  .photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  .emo { font-family: "Noto Color Emoji", sans-serif; font-style: normal; }
+  .num {
+    flex: none; width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent); color: var(--white);
+    display: grid; place-items: center; font-weight: 900; font-size: 20px;
+  }
+  .wa { display: inline-block; width: 40px; height: 22px; flex: none; vertical-align: middle; }
+  .wa svg { width: 100%; height: 100%; display: block; }
+
+  .foot {
+    position: absolute; left: 54px; right: 54px; bottom: 22px;
+    display: flex; justify-content: space-between;
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .85;
+  }
+  .fine { font-size: 10.5px; line-height: 1.4; opacity: .9; }
+
+  /* ---------- Seite 1: Cover ---------- */
+  #p1 { padding-top: 70px; }
+  #p1 h1 { font-size: 124px; line-height: .95; margin-top: 22px; }
+  #p1 .lead { font-size: 21px; max-width: 520px; margin-top: 22px; }
+  #p1 .prod { position: absolute; right: 46px; top: 330px; width: 360px; height: 280px; transform: rotate(3deg); }
+  #p1 .prod img { object-fit: contain; padding: 6px; }
+  #p1 .gift { margin-top: 30px; width: 300px; padding: 18px 20px; transform: rotate(-2deg); }
+  #p1 .gift b { display: block; font-size: 26px; font-weight: 900; text-transform: uppercase; line-height: 1.05; }
+  #p1 .gift span { font-size: 14px; font-weight: 600; }
+  #p1 .stats { display: flex; gap: 14px; margin-top: 230px; }
+  #p1 .stat { flex: 1; padding: 14px 16px; }
+  #p1 .stat b { display: block; font-size: 40px; font-weight: 900; color: var(--blue); line-height: 1; }
+  #p1 .stat span { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  #p1 .toc { margin-top: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 30px; font-weight: 800; font-size: 15px; text-transform: uppercase; }
+  #p1 .toc div { display: flex; align-items: center; gap: 10px; border-bottom: 2px solid rgba(255,255,255,.4); padding-bottom: 7px; }
+  #p1 .toc i { font-style: normal; color: var(--navy); }
+  #p1 .sig { position: absolute; left: 54px; right: 54px; bottom: 50px; display: flex; justify-content: space-between; align-items: end; }
+  #p1 .sig b { font-size: 30px; font-weight: 900; }
+  #p1 .sig span { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ---------- Seite 2: 6 Kniffe ---------- */
+  #p2 h1 { font-size: 56px; margin-top: 16px; }
+  #p2 .tips { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 22px; margin-top: 28px; }
+  #p2 .tip { padding: 18px 20px 18px; position: relative; min-height: 178px; }
+  #p2 .tip .top { display: flex; align-items: center; justify-content: space-between; }
+  #p2 .tip .emo { font-size: 46px; line-height: 1; }
+  #p2 .tip h3 { font-size: 22px; font-weight: 900; text-transform: uppercase; line-height: 1.05; margin-top: 12px; display: flex; gap: 8px; align-items: center; }
+  #p2 .tip p { font-size: 14.5px; line-height: 1.42; font-weight: 500; margin-top: 8px; }
+  #p2 .tip:nth-child(even) { transform: translateY(10px); }
+  #p2 .know { margin-top: 30px; background: var(--navy); border-radius: 18px; padding: 16px 22px; font-size: 15px; line-height: 1.45; font-weight: 600; display: flex; gap: 14px; align-items: center; }
+  #p2 .know .emo { font-size: 30px; }
+
+  /* ---------- Seite 3: Ritual ---------- */
+  #p3 h1 { font-size: 60px; margin-top: 16px; }
+  #p3 .row { display: flex; gap: 30px; margin-top: 28px; }
+  #p3 .photo { width: 268px; height: 420px; flex: none; transform: rotate(-2.5deg); }
+  #p3 .photo img { object-position: 50% 22%; }
+  #p3 .steps { display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  #p3 .step { display: flex; gap: 14px; padding: 16px 18px; align-items: flex-start; }
+  #p3 .step b { display: block; font-size: 17px; font-weight: 900; text-transform: uppercase; }
+  #p3 .step span { font-size: 14px; line-height: 1.4; font-weight: 500; }
+  #p3 .hint { font-size: 13px; font-weight: 700; margin-top: 2px; }
+  #p3 .day { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+  #p3 .slot { padding: 16px 16px 18px; }
+  #p3 .slot .emo { font-size: 34px; }
+  #p3 .slot small { display: block; font-size: 12px; font-weight: 800; letter-spacing: .14em; color: var(--orange); margin-top: 6px; }
+  #p3 .slot b { display: block; font-size: 17px; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-top: 3px; }
+  #p3 .slot p { font-size: 13px; line-height: 1.42; font-weight: 500; margin-top: 7px; }
+
+  /* ---------- Seite 4: Brief ---------- */
+  #p4 h1 { font-size: 54px; margin-top: 16px; }
+  #p4 .row { display: flex; gap: 26px; margin-top: 24px; align-items: flex-start; }
+  #p4 .who { width: 220px; flex: none; }
+  #p4 .who .photo { height: 280px; transform: rotate(2deg); }
+  #p4 .who .photo img { object-position: 50% 18%; }
+  #p4 .who b { display: block; font-size: 24px; font-weight: 900; margin-top: 18px; }
+  #p4 .who span { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  #p4 .who em { display: block; font-style: normal; font-size: 13px; margin-top: 6px; opacity: .9; }
+  #p4 .letter { padding: 22px 24px; font-size: 14.5px; line-height: 1.5; font-weight: 500; }
+  #p4 .letter p + p { margin-top: 9px; }
+  #p4 .letter .hi { font-weight: 900; font-size: 18px; }
+  #p4 .reasons { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; margin-top: 26px; }
+  #p4 .reason { padding: 14px 16px; display: flex; gap: 12px; }
+  #p4 .reason b { display: block; font-size: 15.5px; font-weight: 900; text-transform: uppercase; line-height: 1.15; }
+  #p4 .reason div span { font-size: 13px; line-height: 1.4; font-weight: 500; display: block; margin-top: 4px; }
+  #p4 .rule { margin-top: 20px; font-size: 13px; line-height: 1.45; font-weight: 600; border-left: 5px solid var(--white); padding-left: 14px; }
+
+  /* ---------- Seite 5: Zutaten ---------- */
+  #p5 h1 { font-size: 72px; margin-top: 16px; }
+  #p5 .prod { position: absolute; right: 50px; top: 52px; width: 270px; height: 210px; transform: rotate(3deg); }
+  #p5 .prod img { object-fit: contain; padding: 4px; }
+  #p5 .groups { display: flex; flex-direction: column; gap: 18px; margin-top: 70px; }
+  #p5 .group { padding: 16px 22px; }
+  #p5 .g-head { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 900; text-transform: uppercase; }
+  #p5 .g-names { font-size: 13px; font-weight: 700; color: var(--orange); margin: 4px 0 0 52px; text-transform: uppercase; letter-spacing: .03em; }
+  #p5 .g-row { display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 500; line-height: 1.4; margin: 6px 0 0 52px; }
+  #p5 .g-row .wa { width: 28px; height: 16px; }
+  #p5 .quality { margin-top: 24px; background: var(--navy); border-radius: 18px; padding: 16px 22px; }
+  #p5 .quality b { font-size: 16px; font-weight: 900; text-transform: uppercase; }
+  #p5 .quality p { font-size: 13.5px; line-height: 1.45; font-weight: 500; margin-top: 4px; }
+  #p5 .checks { display: flex; gap: 12px; margin-top: 18px; }
+  #p5 .chk { flex: 1; padding: 10px 14px; font-size: 14px; font-weight: 900; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+
+  /* ---------- Seite 6: Firma ---------- */
+  #p6 h1 { font-size: 50px; margin-top: 16px; }
+  #p6 .hero { height: 220px; margin-top: 24px; transform: rotate(-1deg); position: relative; }
+  #p6 .logo { position: absolute; right: 22px; bottom: 18px; background: var(--white); border-radius: 12px; padding: 8px 14px; }
+  #p6 .logo img { height: 26px; width: auto; display: block; }
+  #p6 .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; margin-top: 26px; }
+  #p6 .fact { padding: 14px 16px; }
+  #p6 .fact b { display: flex; gap: 8px; align-items: center; font-size: 15px; font-weight: 900; text-transform: uppercase; line-height: 1.15; }
+  #p6 .fact p { font-size: 12.8px; line-height: 1.42; font-weight: 500; margin-top: 5px; }
+  #p6 .awards { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; align-items: center; }
+  #p6 .awards small { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; margin-right: 4px; }
+  #p6 .chip { background: var(--white); color: var(--navy); font-weight: 800; font-size: 12px; padding: 6px 12px; border-radius: 999px; }
+  #p6 .next { margin-top: 22px; background: var(--orange); border-radius: 18px; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center; box-shadow: 7px 7px 0 var(--navy); }
+  #p6 .next b { font-size: 22px; font-weight: 900; text-transform: uppercase; }
+  #p6 .next span { font-size: 13.5px; font-weight: 600; display: block; margin-top: 2px; }
+  #p6 .next i { font-style: normal; font-weight: 900; font-size: 18px; white-space: nowrap; }
+
+  /* ---------- Seite 7: Bestellung ---------- */
+  #p7 { text-align: center; }
+  #p7 h1 { font-size: 56px; margin-top: 16px; }
+  #p7 .lead { margin: 14px auto 0; }
+  #p7 .offer { display: flex; gap: 22px; margin-top: 26px; text-align: left; align-items: stretch; }
+  #p7 .price { width: 230px; flex: none; padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: center; transform: rotate(-2deg); }
+  #p7 .price b { font-size: 54px; font-weight: 900; color: var(--orange); line-height: 1; }
+  #p7 .price span { font-size: 13px; font-weight: 700; margin-top: 8px; display: block; }
+  #p7 .price em { font-style: normal; display: inline-block; margin-top: 10px; background: var(--blue); color: var(--white); border-radius: 999px; padding: 5px 12px; font-weight: 800; font-size: 13px; }
+  #p7 .incl { flex: 1; padding: 20px 22px; }
+  #p7 .incl b { font-size: 17px; font-weight: 900; text-transform: uppercase; }
+  #p7 .incl li { list-style: none; display: flex; gap: 10px; font-size: 14px; line-height: 1.4; font-weight: 500; margin-top: 9px; }
+  #p7 .incl li::before { content: "✓"; color: var(--white); background: var(--orange); border-radius: 50%; width: 22px; height: 22px; flex: none; display: grid; place-items: center; font-weight: 900; font-size: 13px; }
+  #p7 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; text-align: left; }
+  #p7 .st { padding: 14px 16px; }
+  #p7 .st .num { background: var(--blue); }
+  #p7 .st b { display: block; font-size: 15px; font-weight: 900; text-transform: uppercase; margin-top: 10px; }
+  #p7 .st span:not(.num) { display: block; font-size: 12.8px; line-height: 1.4; font-weight: 500; margin-top: 4px; }
+  #p7 .go { display: flex; gap: 22px; align-items: center; justify-content: center; margin-top: 28px; }
+  #p7 .btn {
+    display: inline-block; background: var(--navy); color: var(--white); text-decoration: none;
+    font-weight: 900; font-size: 26px; text-transform: uppercase; padding: 20px 30px; border-radius: 999px;
+    box-shadow: 7px 7px 0 var(--blue);
+  }
+  #p7 .url { display: block; margin-top: 12px; font-size: 13.5px; font-weight: 700; color: var(--white); }
+  #p7 .qr { width: 128px; height: 128px; padding: 8px; flex: none; }
+  #p7 .qr img { width: 100%; height: 100%; display: block; }
+  #p7 .qrcap { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; margin-top: 6px; }
+  #p7 .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+  #p7 .three div { border-top: 3px solid rgba(255,255,255,.6); padding-top: 9px; }
+  #p7 .three b { display: block; font-size: 16px; font-weight: 900; text-transform: uppercase; }
+  #p7 .three span { font-size: 12.8px; line-height: 1.4; font-weight: 500; }
+  #p7 .fine { position: absolute; left: 54px; right: 54px; bottom: 48px; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Cover -->
+<section class="page orange" id="p1">
+  <div class="blob" style="width:520px;height:520px;right:-200px;top:-160px"></div>
+  <div class="ring" style="width:300px;height:300px;left:-120px;bottom:120px"></div>
+  <span class="kicker">Gisèle empfiehlt</span>
+  <h1>NoCarb-T</h1>
+  <p class="lead">Mein kleiner Begleiter vor dem Essen – und warum ich ihn als Heilpraktikerin gerne weitergebe.</p>
+  <div class="card gift"><b><span class="emo">🎁</span> Mit meinen 6 Alltags-Kniffen</b><span>für Genuss ohne Reue – ab Seite 2</span></div>
+  <div class="photo prod"><img src="assets/produkt.jpg" alt=""></div>
+  <div class="stats">
+    <div class="card stat"><b>100 %</b><span>natürliche Wirkstoffe</span></div>
+    <div class="card stat"><b>0 %</b><span>zugesetzter Zucker</span></div>
+    <div class="card stat"><b>0 %</b><span>Farbstoffe</span></div>
+  </div>
+  <div class="toc">
+    <div><i>02</i> Meine 6 Alltags-Kniffe</div>
+    <div><i>03</i> Mein Ritual</div>
+    <div><i>04</i> Mein Brief an dich</div>
+    <div><i>05</i> Was ist drin?</div>
+    <div><i>06</i> Die Firma dahinter</div>
+    <div><i>07</i> Dein Start: Bestellung</div>
+  </div>
+  <div class="sig"><div><b>Deine Gisèle</b><br><span>Heilpraktikerin</span></div><span>Apfel-Zimt · 28 Sticks à 5 g</span></div>
+</section>
+
+<!-- 2 · 6 Alltags-Kniffe -->
+<section class="page blue" id="p2">
+  <div class="blob" style="width:460px;height:460px;right:-180px;top:-140px"></div>
+  <div class="ring" style="width:260px;height:260px;left:-110px;bottom:60px"></div>
+  <span class="kicker">Praxis-Tipps</span>
+  <h1>Meine 6 <span class="mark">Alltags-Kniffe</span><br>für Genuss ohne Reue</h1>
+  <div class="tips">
+    <div class="card tip"><div class="top"><span class="emo">☕</span><span class="num">1</span></div>
+      <h3>Warm als Tee</h3><p>Der Apfel-Zimt-Geschmack macht sich in einer schönen Tasse am besten – besonders in kühleren Monaten.</p></div>
+    <div class="card tip"><div class="top"><span class="emo">🧊</span><span class="num">2</span></div>
+      <h3>Kalt als Erfrischung</h3><p>Mit Eiswürfeln und einer Zitronenscheibe wird daraus eine Sommer-Limonade ohne Zucker.</p></div>
+    <div class="card tip"><div class="top"><span class="emo">💧</span><span class="num">3</span></div>
+      <h3>Genug trinken</h3><p>Ballaststoffe brauchen Flüssigkeit. Deshalb über den Tag verteilt ausreichend Wasser oder Tee.</p></div>
+    <div class="card tip"><div class="top"><span class="emo">🥦</span><span class="num">4</span></div>
+      <h3>Gemüse zuerst</h3><p>Beim Essen erst Gemüse und Eiweiß, dann die Kohlenhydrate. Das ergänzt sich wunderbar.</p></div>
+    <div class="card tip"><div class="top"><span class="emo">🚶‍♀️</span><span class="num">5</span></div>
+      <h3>Bewegung nach dem Essen</h3><p>Zehn Minuten Spaziergang tun Verdauung und Laune gut.</p></div>
+    <div class="card tip"><div class="top"><span class="emo">👜</span><span class="num">6</span></div>
+      <h3>Unterwegs</h3><p>Die Sticks sind klein und leicht – ideal für Reisen, Meetings und lange Tage.</p></div>
+  </div>
+  <div class="know"><span class="emo">💡</span><span><b>Gut zu wissen:</b> Eine Packung enthält 28 Sticks. Mit einem Stick pro Tag reicht sie etwa vier Wochen – genug Zeit, um daraus eine echte Gewohnheit zu machen.</span></div>
+  <div class="foot"><span>Gisèle · Heilpraktikerin</span><span>NoCarb-T · Seite 2</span></div>
+</section>
+
+<!-- 3 · Ritual -->
+<section class="page orange" id="p3">
+  <div class="blob" style="width:420px;height:420px;right:-160px;bottom:-120px"></div>
+  <span class="kicker">So passt es in deinen Alltag</span>
+  <h1>Mein <span class="mark">Ritual</span><br>vor dem Essen</h1>
+  <div class="row">
+    <div class="photo"><img src="assets/ritual-frau.jpg" alt=""></div>
+    <div class="steps">
+      <p class="lead" style="margin:0">Du brauchst nur einen Stick und ein Glas oder eine Tasse. Mehr nicht.</p>
+      <div class="card step"><span class="num">1</span><div><b>Einrühren</b><span>Stick aufreißen und in Wasser einrühren – kalt oder warm, so wie es dir schmeckt.</span></div></div>
+      <div class="card step"><span class="num">2</span><div><b>Trinken</b><span>Gut umrühren und in Ruhe trinken, bevor du eine kohlenhydratreiche Mahlzeit isst.</span></div></div>
+      <div class="card step"><span class="num">3</span><div><b>Genießen</b><span>Danach in Ruhe essen und das Sättigungsgefühl bewusst wahrnehmen.</span></div></div>
+      <p class="hint"><i class="wa"></i> Die genaue Verzehrempfehlung findest du auf der Packung.</p>
+    </div>
+  </div>
+  <div class="day">
+    <div class="card slot"><span class="emo">🥐</span><small>MORGENS</small><b>Vor Müsli, Brötchen &amp; Co.</b><p>Stick ins Glas, während der Kaffee durchläuft. Perfekt, wenn du morgens zu Brot, Haferflocken oder Obstsaft greifst.</p></div>
+    <div class="card slot"><span class="emo">🥗</span><small>MITTAGS</small><b>Vor dem Hauptgericht</b><p>Ein Stick passt in jede Handtasche. Im Büro einfach in die Tasse mit warmem Wasser – sieht aus wie ein ganz normaler Tee.</p></div>
+    <div class="card slot"><span class="emo">🍕</span><small>ABENDS</small><b>Vor Pasta, Reis &amp; Pizza</b><p>Für die Abende, an denen es etwas mehr sein darf. So bleibt der Genuss – und du hast trotzdem etwas für dich getan.</p></div>
+  </div>
+  <div class="foot"><span>Gisèle · Heilpraktikerin</span><span>NoCarb-T · Seite 3</span></div>
+</section>
+
+<!-- 4 · Brief -->
+<section class="page blue" id="p4">
+  <div class="blob" style="width:400px;height:400px;left:-180px;top:-150px"></div>
+  <span class="kicker">Von Freundin zu Freundin</span>
+  <h1>Warum ich NoCarb-T<br><span class="mark">empfehle</span></h1>
+  <div class="row">
+    <div class="who">
+      <div class="photo"><img src="assets/gisele.jpg" alt=""></div>
+      <b>Gisèle</b><span>Heilpraktikerin</span><em>Natürlich ergänzen, fachlich begründet.</em>
+    </div>
+    <div class="card letter">
+      <p class="hi">Liebe Freundin,</p>
+      <p>du hast mich gefragt, was ich von NoCarb-T halte – also erzähle ich es dir so, wie ich es bei einem Kaffee tun würde.</p>
+      <p>Als Heilpraktikerin habe ich gelernt: Es gibt selten die eine große Stellschraube. Meistens sind es kleine Gewohnheiten, die man wirklich durchhält. Genau deshalb gefällt mir NoCarb-T.</p>
+      <p>Es ist kein Wundermittel und keine Radikalkur, sondern ein einfacher Stick, den du in ein Glas Wasser rührst, bevor du etwas Kohlenhydratreiches isst. Zwei Minuten, ein kleines Ritual.</p>
+      <p>Und es passt genau dorthin, wo wir im Alltag hängen bleiben: Brot, Nudeln, Süßes. Für mich ist es eine schöne Erinnerung, bewusst zu essen – und zu genießen.</p>
+      <p style="font-weight:900">Deine Gisèle</p>
+    </div>
+  </div>
+  <div class="reasons">
+    <div class="card reason"><span class="num">1</span><div><b>Es passt in den echten Alltag</b><span>Kein Plan, den du nach drei Tagen aufgibst. Ein Stick, ein Glas Wasser, fertig – auch im Büro oder auf Reisen.</span></div></div>
+    <div class="card reason"><span class="num">2</span><div><b>Ich kenne die Zutaten</b><span>Ballaststoffe, Zimt, grüner Tee und Chrom: Bausteine, mit denen ich mich als Naturheilkundlerin gern beschäftige.</span></div></div>
+    <div class="card reason"><span class="num">3</span><div><b>Sauber formuliert</b><span>Rein pflanzliche Zusammensetzung, ohne zugesetzten Zucker, ohne synthetische Farbstoffe und künstliche Konservierungsstoffe.</span></div></div>
+    <div class="card reason"><span class="num">4</span><div><b>Schmeckt nach Apfel-Zimt-Tee</b><span>Was nicht schmeckt, nimmt man nicht. Warm oder kalt – es fühlt sich nach Genuss an, nicht nach Verzicht.</span></div></div>
+  </div>
+  <p class="rule">Mein Grundsatz bleibt: Ein Nahrungsergänzungsmittel ist ein Baustein, kein Ersatz für eine ausgewogene, abwechslungsreiche Ernährung und einen gesunden Lebensstil. Wenn du Medikamente nimmst oder eine Erkrankung hast, sprich vorher kurz mit deiner Ärztin oder deinem Arzt.</p>
+  <div class="foot"><span>Gisèle · Heilpraktikerin</span><span>NoCarb-T · Seite 4</span></div>
+</section>
+
+<!-- 5 · Zutaten -->
+<section class="page orange" id="p5">
+  <div class="ring" style="width:280px;height:280px;left:-120px;bottom:80px"></div>
+  <span class="kicker">Was dahintersteckt</span>
+  <h1>Was ist<br><span class="mark">drin?</span></h1>
+  <div class="photo prod"><img src="assets/produkt.jpg" alt=""></div>
+  <div class="groups">
+    <div class="card group">
+      <div class="g-head"><i class="wa"></i>Lösliche Ballaststoffe</div>
+      <div class="g-names">Yacón · Akazienfaser · Chicorée-Inulin · Apfelpektin</div>
+      <div class="g-row"><i class="wa"></i>Bilden mit Wasser ein sanftes Gel im Verdauungstrakt</div>
+      <div class="g-row"><i class="wa"></i>Natürliche Fasern aus Wurzeln, Akazie und Apfel</div>
+    </div>
+    <div class="card group">
+      <div class="g-head"><i class="wa"></i>Organisches Chrom</div>
+      <div class="g-names">Essenzielles Spurenelement</div>
+      <div class="g-row"><i class="wa"></i>Trägt zu einem normalen Blutzuckerspiegel bei</div>
+      <div class="g-row"><i class="wa"></i>Trägt zu einem normalen Stoffwechsel von Makronährstoffen bei</div>
+    </div>
+    <div class="card group">
+      <div class="g-head"><i class="wa"></i>Zimt-Extrakt</div>
+      <div class="g-names">Klassisches Gewürz</div>
+      <div class="g-row"><i class="wa"></i>Sorgt für den warmen Apfel-Zimt-Geschmack</div>
+    </div>
+    <div class="card group">
+      <div class="g-head"><i class="wa"></i>Grüner-Tee-Extrakt</div>
+      <div class="g-names">Reich an EGCG</div>
+      <div class="g-row"><i class="wa"></i>Pflanzlicher Extrakt aus den Blättern des grünen Tees</div>
+    </div>
+  </div>
+  <div class="checks">
+    <div class="card chk"><span class="num" style="width:26px;height:26px;font-size:14px">✓</span>Ohne Zuckerzusatz</div>
+    <div class="card chk"><span class="num" style="width:26px;height:26px;font-size:14px">✓</span>Ohne Farbstoffe</div>
+    <div class="card chk"><span class="num" style="width:26px;height:26px;font-size:14px">✓</span>Rein pflanzlich</div>
+  </div>
+  <div class="quality"><b>Mein Qualitäts-Check</b><p>Rein pflanzlich, frei von künstlichen Konservierungsstoffen, synthetischen Farbstoffen und zugesetztem Zucker. Gedacht als tägliche Ergänzung vor kohlenhydratreichen Mahlzeiten.</p></div>
+  <div class="foot"><span>Gisèle · Heilpraktikerin</span><span>NoCarb-T · Seite 5</span></div>
+</section>
+
+<!-- 6 · Firma -->
+<section class="page blue" id="p6">
+  <div class="blob" style="width:420px;height:420px;right:-170px;top:-150px"></div>
+  <span class="kicker">FuXion im Überblick</span>
+  <h1>Natur-Wissen trifft<br><span class="mark">Biotechnologie</span></h1>
+  <div class="photo hero"><img src="assets/firma.jpg" alt=""><div class="logo"><img src="assets/fuxion-logo.png" alt="FuXion"></div></div>
+  <div class="facts">
+    <div class="card fact"><b><i class="wa"></i>Lateinamerikanische Biotech-Firma</b><p>FuXion Biotech erforscht, entwickelt und produziert nutrazeutische Lebensmittel – auf Basis eigener, patentierter Technologie.</p></div>
+    <div class="card fact"><b><i class="wa"></i>„Fusión Nutracéutica“</b><p>Die Philosophie: überliefertes Wissen alter Kulturen, vor allem aus dem Amazonasgebiet, mit moderner Biotechnologie verbinden.</p></div>
+    <div class="card fact"><b><i class="wa"></i>Clean Label</b><p>Natürlicher Ursprung, viele Zutaten aus dem Amazonasraum, Farben und Aromen aus Früchten und Gemüse. Leicht verständliche Etiketten.</p></div>
+    <div class="card fact"><b><i class="wa"></i>Gründer &amp; Reichweite</b><p>Gründer Álvaro Zúñiga wollte Superfoods aus dem Amazonasgebiet weltweit bekannt machen. Heute ist FuXion in 35 Ländern aktiv, auch in der EU.</p></div>
+  </div>
+  <div class="awards"><small>Qualität laut Katalog</small><span class="chip">HACCP</span><span class="chip">BPM / GMP</span><span class="chip">Baltic Control (Inacal-akkreditiert)</span><span class="chip">Humanitas · Empresa Peruana del Año</span><span class="chip">Éxito Business Awards</span></div>
+  <div class="next"><div><b>Bereit für deinen Start?</b><span>Auf der nächsten Seite findest du den direkten Bestell-Link für Deutschland.</span></div><i>Seite 7 →</i></div>
+  <p class="fine" style="margin-top:16px">Angaben zu Firma und Verfahren stammen aus Herstellerunterlagen.</p>
+  <div class="foot"><span>Gisèle · Heilpraktikerin</span><span>NoCarb-T · Seite 6</span></div>
+</section>
+
+<!-- 7 · Bestellung -->
+<section class="page orange" id="p7">
+  <div class="blob" style="width:460px;height:460px;left:-200px;top:-180px"></div>
+  <div class="ring" style="width:260px;height:260px;right:-100px;bottom:180px"></div>
+  <span class="kicker">Dein Start</span>
+  <h1>Mach daraus eine<br><span class="mark">Gewohnheit</span></h1>
+  <p class="lead">Du kennst jetzt die Kniffe, das Ritual und die Zutaten. Der leichteste Weg, es auszuprobieren: eine Packung, vier Wochen, ein Stick vor dem Essen.</p>
+  <div class="offer">
+    <div class="card price"><b>41,25 €</b><span>1 Packung · 28 Sticks à 5 g</span><div><em>≈ 1,47 € pro Tag</em></div></div>
+    <div class="card incl"><b>NoCarb-T · Apfel-Zimt</b>
+      <ul><li>Reicht bei einem Stick pro Tag für etwa 4 Wochen</li><li>Rein pflanzlich, ohne zugesetzten Zucker und Farbstoffe</li><li>Praktisch für Zuhause, Büro und Reisen</li></ul></div>
+  </div>
+  <div class="steps">
+    <div class="card st"><span class="num">1</span><b>Link öffnen</b><span>Du landest automatisch auf der deutschen Seite.</span></div>
+    <div class="card st"><span class="num">2</span><b>NoCarb-T wählen</b><span>Packung in den Warenkorb legen und bestellen.</span></div>
+    <div class="card st"><span class="num">3</span><b>Stick vor dem Essen</b><span>Einrühren, trinken, genießen – und vier Wochen dranbleiben.</span></div>
+  </div>
+  <div class="go">
+    <div>
+      <a class="btn" href="https://tiendafuxion.com/storelt/giselebreton/3185933">Jetzt bestellen →</a>
+      <a class="url" href="https://tiendafuxion.com/storelt/giselebreton/3185933">tiendafuxion.com/storelt/giselebreton/3185933</a>
+    </div>
+    <div><div class="card qr"><img src="assets/qr.svg" alt="QR-Code zum Shop"></div><div class="qrcap">Scannen &amp; bestellen</div></div>
+  </div>
+  <div class="three">
+    <div><b>Einfach</b><span>Ein Stick, ein Glas Wasser, zwei Minuten.</span></div>
+    <div><b>Angenehm</b><span>Schmeckt nach Apfel-Zimt-Tee, warm oder kalt.</span></div>
+    <div><b>Durchdacht</b><span>Ballaststoffe, Zimt, grüner Tee und Chrom in einer Rezeptur.</span></div>
+  </div>
+  <p class="fine">Preis und Versand laut aktuellem Angebot im Shop. Nahrungsergänzungsmittel sind kein Ersatz für eine ausgewogene und abwechslungsreiche Ernährung sowie eine gesunde Lebensweise. Die angegebene empfohlene tägliche Verzehrmenge darf nicht überschritten werden. Außerhalb der Reichweite von kleinen Kindern aufbewahren.</p>
+  <div class="foot"><span>Gisèle · Heilpraktikerin</span><span>NoCarb-T · Seite 7</span></div>
+</section>
+
+<script>
+  // Wellenförmige Pfeile wie im Reel (statisch)
+  let d = "M-48 18 q4 -14 8 0";
+  for (let i = 0; i < 14; i++) d += " t8 0";
+  document.querySelectorAll(".wa").forEach((el, i) => {
+    const id = "c" + i;
+    el.innerHTML = `<svg viewBox="0 0 64 36"><defs><clipPath id="${id}"><rect x="0" y="0" width="47" height="36"/></clipPath></defs>
+      <g clip-path="url(#${id})"><path d="${d}" transform="translate(${(i * 5) % 16} 0)" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round"/></g>
+      <path d="M43 7 L62 18 L43 29 Z" fill="var(--accent)"/></svg>`;
+  });
+</script>
+</body>
+</html>
