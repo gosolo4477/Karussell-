@@ -5,9 +5,9 @@
 <title>NoCarb-T Ratgeber</title>
 <style>
   :root {
-    --orange: #ff6a00;
-    --blue: #0047ff;
-    --navy: #0a1a4f;
+    --orange: #e8641b;
+    --blue: #2f6fe0;
+    --navy: #0b0908;
     --white: #ffffff;
   }
   @page { size: A4; margin: 0; }
@@ -216,6 +216,30 @@
   #p7 .dash { width: 14px; height: 4px; background: rgba(255,255,255,.5); }
   #p7 .fine { position: absolute; left: 54px; right: 54px; bottom: 48px; }
   #p1 .prod img, #p5 .prod img { object-fit: cover; padding: 0; }
+
+  /* ---------- Edles Thema (dunkel, Gold) ---------- */
+  :root { --gold: #c9a24a; --ink: #0b0908; --ivory: #fbf7ef; }
+  html, body { background: #000; }
+  .orange { background: radial-gradient(120% 85% at 85% 0%, #3b2b1c 0%, #17120e 48%, #0b0908 100%); }
+  .blue   { background: radial-gradient(120% 85% at 10% 100%, #3b2b1c 0%, #17120e 48%, #0b0908 100%); }
+  .blob { background: radial-gradient(circle, rgba(201,162,74,.16), rgba(201,162,74,0) 70%); }
+  .ring { border: 2px solid rgba(201,162,74,.35); }
+  .kicker { background: transparent; color: var(--gold); border: 1.5px solid var(--gold); }
+  .mark { box-shadow: 0 6px 18px rgba(0,0,0,.45); }
+  .card { background: var(--ivory); box-shadow: 0 12px 30px rgba(0,0,0,.5), 0 0 0 1px rgba(201,162,74,.35); }
+  .photo { border: 3px solid var(--gold); box-shadow: 0 16px 40px rgba(0,0,0,.6); background: #000; }
+  .foot { color: var(--gold); opacity: .9; }
+  #p1 .toc div { border-bottom-color: rgba(201,162,74,.45); }
+  #p1 .toc i { color: var(--gold); }
+  #p1 .sig b { color: var(--gold); }
+  #p2 .know, #p5 .quality, #p7 .points { background: rgba(255,255,255,.06); border: 1px solid rgba(201,162,74,.45); box-shadow: none; }
+  #p4 .rule { border-left-color: var(--gold); }
+  #p4 .who b { color: var(--gold); }
+  #p6 .next { box-shadow: 0 12px 30px rgba(0,0,0,.5); }
+  #p6 .chip { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+  #p7 .btn { background: var(--gold); color: var(--ink); box-shadow: 0 12px 30px rgba(0,0,0,.5); }
+  #p7 .url { color: var(--gold); }
+  #p7 .three div { border-top-color: rgba(201,162,74,.6); }
 </style>
 </head>
 <body>
