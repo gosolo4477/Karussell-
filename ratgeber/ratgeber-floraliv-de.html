@@ -250,6 +250,32 @@
   .routine .r small { display: block; font-size: 11px; font-weight: 800; letter-spacing: .14em; color: var(--gold); }
   .routine .r b { display: block; font-size: 15px; font-weight: 900; text-transform: uppercase; margin-top: 2px; }
   .routine .r span { display: block; font-size: 12px; line-height: 1.35; font-weight: 500; margin-top: 3px; }
+  /* ---------- Farbthema: Farbverlauf ---------- */
+  /* ---------- Knallig (zurueck zum Pop-Look) ---------- */
+  html, body { background: #888; }
+  .blob { background: rgba(255,255,255,.12); }
+  .ring { border: 10px solid rgba(255,255,255,.16); }
+  .kicker { background: var(--navy); color: #fff; border: 0; }
+  .mark { box-shadow: 5px 5px 0 var(--navy); }
+  .card { background: #fff; box-shadow: 7px 7px 0 var(--navy); }
+  .photo { border: 8px solid #fff; box-shadow: 8px 8px 0 var(--navy); background: #fff; }
+  .foot { color: inherit; opacity: .85; }
+  #p1 .toc div { border-bottom-color: rgba(255,255,255,.45); }
+  #p1 .toc i, #p1 .sig b, #p4 .who b { color: inherit; }
+  #p2 .know, #p5 .quality, #p7 .points { background: var(--navy); border: 0; box-shadow: 7px 7px 0 rgba(0,0,0,.18); }
+  #p4 .rule { border-left-color: currentColor; }
+  #p6 .chip { background: #fff; color: var(--navy); border: 0; }
+  #p7 .btn { background: var(--navy); color: #fff; box-shadow: 7px 7px 0 rgba(0,0,0,.25); }
+  #p7 .url { color: inherit; }
+  .routine { background: var(--navy); border: 0; box-shadow: 7px 7px 0 rgba(0,0,0,.18); }
+  .routine .r.me { box-shadow: 0 0 0 3px var(--accent); }
+  :root { --orange: #ff9800; --blue: #21a84a; --navy: #3a1f00; }
+  .orange { background: linear-gradient(150deg,#ffe14d 0%,#ffb300 50%,#ff8a00 100%); --accent: var(--blue); }
+  .blue { background: linear-gradient(150deg,#ffb300 0%,#ff7a1a 55%,#f0532d 100%); --accent: var(--orange); }
+  #p2 .know, #p5 .quality, #p7 .points, .routine { color: #fff; }
+  .orange { color: #3a1f00; } .orange .mark { color: #fff; } .orange .foot { color: #3a1f00; }
+  .blue { --accent: var(--blue); } #p6 .next { background: var(--blue); } #p1 .stat b, #p7 .price b { color: var(--blue); }
+  /* ---------- /Farbthema ---------- */
 </style>
 <body>
 
