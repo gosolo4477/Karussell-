@@ -304,6 +304,44 @@
     });
   }
 
+  // --- Edler Hintergrund (nur Theme "dark"): Goldlinien, Lichtpunkte, Glanz --------
+  if (THEME === "dark") {
+    const bg = $("#bg");
+    bg.innerHTML =
+      '<svg class="lines" viewBox="0 0 1080 1920" aria-hidden="true"><defs>' +
+      '<linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3d79a" stop-opacity="0"/>' +
+      '<stop offset="0.5" stop-color="#e2b866"/><stop offset="1" stop-color="#f3d79a" stop-opacity="0"/></linearGradient></defs>' +
+      '<g fill="none" stroke="url(#gl)" stroke-width="2">' +
+      '<path class="ln" d="M-120 1480 C 260 1260, 720 1700, 1200 1380"/>' +
+      '<path class="ln" d="M-120 1560 C 300 1360, 760 1780, 1200 1470" stroke-opacity="0.6"/>' +
+      '<path class="ln" d="M-100 360 C 300 120, 700 520, 1180 220" stroke-opacity="0.5"/>' +
+      "</g></svg>" +
+      '<div class="sheen"></div><div class="vignette"></div><div class="grain"></div>';
+    // goldene Lichtpunkte (feste Positionen -> jedes Rendern gleich)
+    const B = [[90, 300, 120], [880, 220, 70], [980, 760, 150], [60, 1050, 90], [760, 1320, 110], [260, 1650, 160],
+      [940, 1700, 80], [520, 120, 60], [160, 620, 50], [640, 980, 46], [400, 1420, 70], [1020, 1180, 54]];
+    const sheen = $(".sheen", bg);
+    B.forEach(([x, y, d], k) => {
+      const el = document.createElement("i");
+      el.className = "bokeh";
+      Object.assign(el.style, { left: x - d / 2 + "px", top: y - d / 2 + "px", width: d + "px", height: d + "px" });
+      bg.insertBefore(el, sheen);
+      // langsam aufsteigend über das ganze Reel, Helligkeit atmet alle 2 Beats
+      seq.push([el, { y: [0, -180 - (k % 4) * 60], x: [0, k % 2 ? 40 : -40] }, { at: 0, duration: t(TOTAL_BEATS), ease: "linear" }]);
+      for (let b = k % 4; b < TOTAL_BEATS; b += 4) {
+        seq.push([el, { opacity: [0.35, 0.9, 0.35] }, { at: t(b), duration: t(4), ease: "easeInOut" }]);
+      }
+    });
+    // Goldlinien schimmern sanft
+    $$(".ln", bg).forEach((el, k) => {
+      seq.push([el, { x: [0, k % 2 ? -60 : 60] }, { at: 0, duration: t(TOTAL_BEATS), ease: "linear" }]);
+    });
+    // Glanz-Streifen zieht bei jedem Folienwechsel einmal über das Bild
+    SLIDES.forEach((s) => {
+      seq.push([sheen, { x: [0, 2400] }, { at: Math.max(0, t(s.start) - 0.2), duration: 1.1, ease: "easeInOut" }]);
+    });
+  }
+
   // --- Abspielen / Rendern ---------------------------------------------------
   const duration = t(TOTAL_BEATS);
   const render = params.has("render");
