@@ -19,6 +19,7 @@ const args = process.argv.slice(2);
 const stillsArg = args.includes("--stills") ? args[args.indexOf("--stills") + 1] : null;
 const lang = args.includes("--lang") ? args[args.indexOf("--lang") + 1] : "es";
 const theme = args.includes("--theme") ? args[args.indexOf("--theme") + 1] : "color";
+const beatStyle = args.includes("--beat") ? args[args.indexOf("--beat") + 1] : "pop";
 const pageName = args.includes("--page") ? args[args.indexOf("--page") + 1] : "index";
 const tag = (pageName === "index" ? "" : pageName + "-") + (theme === "color" ? lang : `${lang}-${theme}`);
 
@@ -68,7 +69,7 @@ if (stillsArg) {
 
   // Beat-Spur erzeugen und dazumischen
   const beat = path.join(out, `beat-${tag}.wav`);
-  execFileSync("python3", [path.join(here, "beat.py"), beat, String(duration), slideStarts.join(",")]);
+  execFileSync("python3", [path.join(here, "beat.py"), beat, String(duration), slideStarts.join(","), beatStyle]);
   execFileSync("ffmpeg", [
     "-loglevel", "error", "-y", "-i", silent, "-i", beat,
     "-c:v", "copy", "-af", "loudnorm=I=-11:TP=-1:LRA=7", "-ar", "44100",
