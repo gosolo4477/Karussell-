@@ -18,6 +18,8 @@
   const TEXT = window.REEL_TEXTS[LANG];
   document.documentElement.lang = LANG;
   document.body.classList.add("lang-" + LANG);
+  const THEME = params.get("theme") === "dark" ? "dark" : "color";
+  document.body.classList.add("theme-" + THEME);
   $$("[data-t]").forEach((el) => {
     if (TEXT[el.dataset.t] !== undefined) el.innerHTML = TEXT[el.dataset.t];
   });
@@ -154,6 +156,11 @@
     const emoji = $("#s1-emoji");
     emojiIn(emoji, t(s.start + 3));
     wiggle(emoji, s.start + 4, s.start + s.beats, 16);
+    const swipe = $(".swipe > span", slide);
+    seq.push([swipe, { opacity: [0, 1] }, { at: t(s.start + 3), duration: 0.3 }]);
+    for (let b = s.start + 4; b < s.start + s.beats; b++) {
+      seq.push([swipe, { x: [0, 18, 0] }, { at: t(b), duration: 0.3, ease: "easeOut" }]);
+    }
   }
 
   // 2: ¿Sin culpa?
@@ -341,6 +348,7 @@
   window.reel = {
     bpm: BPM,
     lang: LANG,
+    theme: THEME,
     duration,
     slideStarts: SLIDES.slice(1).map((sl) => t(sl.start)),
     ready: () => Promise.all(players.flatMap((pl) => pl.frames).map((img) => img.decode().catch(() => {}))),

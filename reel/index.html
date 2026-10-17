@@ -442,6 +442,57 @@
       background: var(--white);
       opacity: 0.45;
     }
+
+    /* ---------- Theme "dark": dunkler Premium-Look mit Orange/Gold ---------- */
+    .swipe { display: none; }
+    .theme-dark {
+      --orange: #f2621c;
+      --gold: #d9a441;
+      --ink: #121010;
+    }
+    .theme-dark #stage {
+      background:
+        radial-gradient(1100px 900px at 85% 108%, rgb(242 98 28 / 0.55), transparent 70%),
+        radial-gradient(900px 700px at 0% 100%, rgb(160 70 20 / 0.45), transparent 70%),
+        radial-gradient(1200px 700px at 50% -10%, rgb(90 70 40 / 0.55), transparent 70%),
+        linear-gradient(180deg, #2a2420 0%, #141111 45%, #0d0b0b 100%);
+    }
+    .theme-dark .slide.orange, .theme-dark .slide.blue { background: transparent; }
+    .theme-dark .blob { background: radial-gradient(circle, rgb(242 98 28 / 0.22), transparent 62%) !important; }
+    .theme-dark .ring { border: 6px solid var(--gold); opacity: 0.14; }
+    .theme-dark .mark { background: var(--orange) !important; border-radius: 10px; padding: 0 20px 6px; }
+    .theme-dark .card {
+      border: 6px solid var(--gold);
+      border-radius: 40px;
+      box-shadow: 0 0 0 2px rgb(0 0 0 / 0.4), 0 40px 90px rgb(0 0 0 / 0.6), 0 0 70px rgb(217 164 65 / 0.18);
+    }
+    .theme-dark .group {
+      background: rgb(255 255 255 / 0.06);
+      color: #fff;
+      border: 3px solid rgb(217 164 65 / 0.35);
+      box-shadow: 0 20px 50px rgb(0 0 0 / 0.45);
+    }
+    .theme-dark .g-head { color: var(--gold); font-size: 46px; letter-spacing: 0.02em; }
+    .theme-dark .g-names { color: #fff; opacity: 0.55; }
+    .theme-dark .group .p-row { font-weight: 700; }
+    .theme-dark .wave-arrow { color: var(--orange) !important; }
+    .theme-dark .chip { background: rgb(255 255 255 / 0.06); color: #fff; border: 3px solid rgb(217 164 65 / 0.5); }
+    .theme-dark .check { background: transparent; color: var(--orange); border: 8px solid var(--orange); }
+    .theme-dark .badge { background: var(--orange) !important; }
+    .theme-dark .gift { background: var(--gold); color: var(--ink); }
+    .theme-dark #s6-cta { color: var(--gold); }
+    .theme-dark .cfield, .theme-dark .posted { background: #f5f1ea; box-shadow: 0 24px 60px rgb(0 0 0 / 0.55), 0 0 0 4px rgb(217 164 65 / 0.35); }
+    .theme-dark .posted { color: var(--ink); }
+    .theme-dark .cpost { color: var(--orange); }
+    .theme-dark .caret { background: var(--orange); }
+    .theme-dark .avatar { background: linear-gradient(135deg, var(--orange), var(--gold)); box-shadow: 0 0 0 4px var(--gold); }
+    .theme-dark .dot { background: var(--gold); }
+    .theme-dark .swipe {
+      display: block;
+      position: absolute; left: 0; right: 0; top: 1500px;
+      text-align: center; color: var(--gold);
+      font-size: 36px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase;
+    }
   </style>
 </head>
 <body>
@@ -459,6 +510,7 @@
         <div class="card" style="top: 760px; width: 560px; height: 720px; margin-left: -280px">
           <img id="s1-video" src="assets/pizza-frames/f_0001.jpg" alt="" style="object-position: 50% 30%" />
         </div>
+        <p class="swipe"><span data-t="s1_swipe"></span></p>
         <div class="emoji" id="s1-emoji" style="top: 1300px; left: 640px; right: auto; font-size: 170px">🍕</div>
       </section>
 
