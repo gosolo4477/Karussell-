@@ -1,7 +1,7 @@
 // Rendert reel/index.html Bild für Bild zu einem MP4 (1080x1920, 30 fps).
 //
 //   node render.mjs [--lang es|de]                 -> out/reel-<lang>-beat.mp4 + out/reel-<lang>-stumm.mp4
-//   node render.mjs [--lang es|de] [--theme dark] --stills 1,5,9  -> out/still-<lang>-<sek>.png (Vorschaubilder)
+//   node render.mjs [--page schwaeche] [--lang es|de] [--theme dark] --stills 1,5,9  -> out/still-<lang>-<sek>.png (Vorschaubilder)
 //
 // Benötigt: Playwright (npm i) und ffmpeg im PATH.
 import { chromium } from "playwright";
@@ -19,14 +19,15 @@ const args = process.argv.slice(2);
 const stillsArg = args.includes("--stills") ? args[args.indexOf("--stills") + 1] : null;
 const lang = args.includes("--lang") ? args[args.indexOf("--lang") + 1] : "es";
 const theme = args.includes("--theme") ? args[args.indexOf("--theme") + 1] : "color";
-const tag = theme === "color" ? lang : `${lang}-${theme}`;
+const pageName = args.includes("--page") ? args[args.indexOf("--page") + 1] : "index";
+const tag = (pageName === "index" ? "" : pageName + "-") + (theme === "color" ? lang : `${lang}-${theme}`);
 
 const executablePath = process.env.CHROMIUM_PATH || (existsSync("/opt/pw-browsers/chromium") ? "/opt/pw-browsers/chromium" : undefined);
 const browser = await chromium.launch({ executablePath });
 const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
 page.on("pageerror", (e) => console.error("Seitenfehler:", e.message));
 
-await page.goto(pathToFileURL(path.join(here, "index.html")).href + "?render=1&lang=" + lang + "&theme=" + theme);
+await page.goto(pathToFileURL(path.join(here, pageName + ".html")).href + "?render=1&lang=" + lang + "&theme=" + theme);
 await page.evaluate(async () => {
   await document.fonts.ready;
   await Promise.all(Array.from(document.images).map((img) => img.decode().catch(() => {})));

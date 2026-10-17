@@ -1,0 +1,96 @@
+/* Zusatz-Stile für das Reel "Pizza, Pasta oder Brot?" */
+.tiles {
+  position: absolute;
+  left: 60px;
+  right: 60px;
+  display: flex;
+  gap: 30px;
+}
+
+.tile {
+  position: relative;
+  flex: 1;
+  height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  border-radius: 40px;
+  background: var(--white);
+  color: var(--navy);
+  box-shadow: 0 18px 0 var(--navy);
+}
+
+.tile .emo { font-size: 170px; line-height: 1; }
+.tile span { font-size: 50px; font-weight: 900; text-transform: uppercase; }
+
+.tnum {
+  position: absolute;
+  left: -18px;
+  top: -18px;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--white);
+  font-size: 48px;
+  font-weight: 900;
+}
+
+.tglow {
+  position: absolute;
+  inset: -10px;
+  border-radius: 48px;
+  border: 8px solid #ffd27a;
+  box-shadow: 0 0 60px rgb(255 200 100 / 0.6);
+  opacity: 0;
+}
+
+.nchips {
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+}
+
+.nchip {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  min-width: 620px;
+  padding: 22px 50px 22px 26px;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--navy);
+  font-size: 80px;
+  font-weight: 900;
+  text-transform: uppercase;
+  box-shadow: 0 14px 0 var(--navy);
+}
+
+.nchip b {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--white);
+}
+
+.nchip .emo { margin-left: auto; font-size: 96px; }
+
+/* dunkler Look */
+.theme-dark .tile, .theme-dark .nchip {
+  background: rgb(255 255 255 / 0.06);
+  color: #fff;
+  border: 3px solid rgb(217 164 65 / 0.45);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.5);
+}
+.theme-dark #a1-q { color: var(--gold); }
